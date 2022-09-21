@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise</title>
+</head>
+
+<body>
+  <h1>Promise</h1>
+  <button id="btn1">basics</button>
+  <button id="btn2">Promise - timeout</button>
+  <button id="btn3">Promise Chain - timeout</button>
+  <hr>
+  <button id="btn4">@실습문제 - 배경색 변경</button>
+  <button id="btn5">@실습문제 - 동적 스크립트 로딩</button>
+  <div class="bg-box"></div>
+  <style>
+    .bg-box {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      border: 1px solid black;
+    }
+  </style>
+  <script>
+    /**
+     * Promise
+     * - 기존 callback함수를 통한 비동기처리를 개선하기 위한 문법
+     * - producer/consumer 코드를 연결
+     *  - producer(비동기처리가 포함된 코드)
+     *  - consumer(비동기완료 후 실행할 코드)
+     * 
+     * 속성
+     * - status
+     *  - pending -> fulfilled(이행) / rejected(거부)
+     * 
+     * - result
+     *  - undefined -> value(이행 시) / error객체(거부 시)
+     */
+    btn1.onclick = () => {
+      // resolve : 이행 시 처리할 콜백 함수. then에서 전달.
+      // reject : 거부 시 호출할 콜백 함수. catch에서 전달.
+      const promise = new Promise((resolve, reject) => {
+        const num = Math.floor(Math.random() * 2);
+        console.log("producing.......", num);
+
+        try {
+          if (!num) throw new Error("오류발생!");
+          resolve(num); // 이행 콜백 호출
+        } catch (e) {
+          reject(e); // 거부 콜백 호출
+        }
+      });
+      console.log(promise);
+
+      promise
+        .then((value) => {
+          console.log('result:', value);
+        })
+        .catch((err) => {
+          console.error('result :', err);
+        });
+    };
+
+    /**
+     * setTimeout을 Promise를 통해 작성하기
+     */
+    btn2.onclick = () => {
+      getTimeoutPromise("아농~", 1000)
+        .then((value) => {
+          alert(value);
+          // then은 암묵적으로 promise객체를 만들어 반환(promise chain)
+        })
+        .then(() => {
+          alert("잘가!");
+
+        })
+    };
+
+    /**
+     * Promise Chain
+     * - 1. 암묵적 chain : then의 resolve 콜백에서 리턴값이 없다면, 암묵적으로 promise객체 반환
+     *  - resolve 콜백에서 특정 값을 리턴한다면 암묵적 promise객체의 result값으로 사용된다.
+     * - 2. 명시적 chain : then의 resolve 콜백에서 다시 promise객체를 반환 후, then메소드로 chaining가능
+     */
+    btn3.onclick = () => {
+      getTimeoutPromise("아농~", 1000)
+        .then((value) => {
+          console.log(value);
+          return getTimeoutPromise("잘가!", 1000);
+        })
+        .then((value) => {
+          alert(value);
+        })
+    };
+
+    const getTimeoutPromise = (msg, millis) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(msg);
+        }, millis);
+      });
+    };
+
+    /**
+     * @실습문제 - 배경색 변경
+     * 
+     */
+    btn4.onclick = () => {
+      const target = document.querySelector(".bg-box");
+      changeBgcolorPromise('red', 1000)
+        .then(() => changeBgcolorPromise('orange', 1000))
+        .then(() => changeBgcolorPromise('yellow', 1000))
+        .then(() => changeBgcolorPromise('green', 1000))
+        .then(() => changeBgcolorPromise('blue', 1000))
+        .then(() => changeBgcolorPromise('darkblue', 1000))
+        .then(() => changeBgcolorPromise('purple', 1000))
+        .then(() => changeBgcolorPromise('pink', 1000))
+    };
+
+    /**
+     * .bg-box의 배경색을 millis이후에 color로 변경하는 프로미스반환 
+     */
+    const changeBgcolorPromise = (color, millis) => {
+      const target = document.querySelector(".bg-box");
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          target.style.backgroundColor = color;
+          resolve();
+        }, millis);
+      });
+    }
+
+    /**
+     * 콘솔출력결과
+     * js/1.js 로딩완료!
+     * bar
+     * js/2.js 로딩완료!
+     * car
+     * js/3.js 로딩완료!
+     * dar
+     */
+    btn5.onclick = () => {
+      loadScriptPromise('js/1.js')
+        .then(() => {
+          const path = bar(); // js/2.js
+          return loadScriptPromise(path);
+        })
+        .then(() => {
+          const path = car();
+          return loadScriptPromise(path);
+        })
+        .then(() => {
+          dar();
+        });
+    };
+
+    const loadScriptPromise = (path) => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = path;
+        script.onload = () => {
+          console.log(`${path} 로딩완료!`);
+          resolve();
+        };
+        document.head.append(script);
+      });
+    };
+  </script>
+
+  <button id="btn6">슬기로운 개발생활</button>
+  <script>
+    const devActions = {
+      gotocafe: {
+        actionname: '카페로 출발합니다.',
+        duration: 1000,
+        next: 'arriveatcafe'
+      },
+      arriveatcafe: {
+        actionname: '카페에 도착했습니다.',
+        duration: 100,
+        next: 'startcoding'
+      },
+      startcoding: {
+        actionname: '코딩을 시작합니다.',
+        duration: 3000,
+        next: 'finishcoding'
+      },
+      finishcoding: {
+        actionname: '코딩을 마칩니다.',
+        duration: 10,
+        next: 'gotohome'
+      },
+      gotohome: {
+        actionname: '집으로 출발합니다.',
+        duration: 1000,
+        next: 'gethome'
+      },
+      gethome: {
+        actionname: '집에 도착했습니다.',
+        duration: 0
+      },
+    }
+
+    btn6.onclick = () => {
+      runDevAction('gotocafe')
+        .then((action) => runDevAction(action))
+        .then((action) => runDevAction(action))
+        .then((action) => runDevAction(action))
+        .then((action) => runDevAction(action))
+        .then((action) => runDevAction(action))
+        .catch((err) => console.log(err))
+        .finally(() => {
+          console.log('해가 지고, 하루가 끝났습니다.');
+        });
+    };
+
+    const runDevAction = (action) => {
+      const { actionname, duration, next } = devActions[action];
+      console.log(actionname);
+      return new Promise((resolve, reject) => {
+        Math.random()*100 > 90 && reject(new Error('친구에게 전화가 왔습니다.'));
+        setTimeout(() => {
+          resolve(next);
+        }, duration)
+      });
+    };
+  </script>
+
+  <button id="btn7">Promise Chain - 값 반환</button>
+  <script>
+
+    btn7.onclick = () => {
+      new Promise((resolve) => {
+        resolve(1);
+      })
+        .then((value) => {
+          console.log(value); // 1
+          return value * 2; // 암묵적 Promise객체의 resolve(value)의 result(value)값이 된다.
+        })
+        .then((value) => {
+          console.log(value);
+          return value * 2; // 2
+        })
+        .then((value) => {
+          console.log(value);
+          return value * 2; // 4
+        })
+    };
+  </script>
+</body>
+
+</html>

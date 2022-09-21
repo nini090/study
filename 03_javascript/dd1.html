@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kk2</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * var 
+     * 1. 같은 이름의 변수를 계속 생성할 수 있다.
+     * 2. 선언하기 전에 사용할 수 있다.(호이스팅)
+     *  - 변수만 올라가고 값은 그대로임 (undefined)
+     * 
+     * 호이스팅 : 스코프 내부 어디서든 변수 선언은 최상위에 선언된 것처럼 행동
+     */
+
+    // 생성자 함수 (여러개의 객체, 붕어빵틀) - 꼭 new 붙이기
+
+    // function User(name, age) { // 첫글자를 대문자로~
+    //   this.name = name;
+    //   this.age = age;
+    //   this.sayName = function() {
+    //     console.log(`Hi, i'm ${this.name}`); // this는 user1,2,3
+    //   }
+    // }
+
+    // let user1 = new User('Kim', 30);
+    // let user2 = new User('Lee', 20);
+    // let user3 = new User('Choi', 10);
+
+    // user3.sayName();
+
+    // function Item(title, price) {
+    //   this.title = title;
+    //   this.price = price;
+    //   this.showPrice = function() {
+    //     console.log(`${this.price}원`);
+    //   }
+    // }
+
+    // let item1 = new Item('인형',3000);
+    // let item2 = new Item('로봇',5000);
+    // let item3 = new Item('칼',1000);
+
+    // console.log(item1, item2, item3);
+    // item1.showPrice();
+
+    // Computed property
+
+    // let a = 'age';
+
+    // const user = {
+    //   name : 'Oh',
+    //   [a] : 30, // age가 들어감
+    // }
+
+    // console.log(user);
+
+    // const user1 = {
+    //   [1 + 4] : 5,
+    //   ["안녕" + "하세요"] : 'Hello',
+    // }
+
+    // console.log(user1);
+
+    // Object.assign() : 객체복제
+
+    // const user2 = {
+    //   name : 'Mike',
+    //   age : 30,
+    // }
+
+    // const newUser2 = Object.assign({name : "Tom", gender : 'M'}, user2); // 같은 요소면 덮어쓰고 새로운 거면 추가
+
+    // console.log(newUser2);
+
+    // Object.keys() : 키 배열 반환
+    // Object.values() : 값 배열 반환
+    // Object.entries() : 키/값 배열 반환
+    // Object.fromEntries() : 키/값 배열을 객체로
+
+    // const user3 = {
+    //   name : 'Loopie',
+    //   age : 30,
+    //   gender : 'M',
+    // }
+
+    // Object.keys(user3);
+    // Object.values(user3);
+    // Object.entries(user3);
+    // console.log(user3);
+
+    // function makeObj(key, val) {
+    //   return {
+    //     [key]: val,
+    //   }
+    // };
+
+    // const obj = makeObj("성별", 'M');
+    // console.log(obj);
+
+    // const user = {
+    //   name : 'Mike',
+    //   age : 30,
+    // };
+
+    // const result = Object.keys(user);
+    // console.log(result); // ['name', 'age']
+    // const result1 = Object.values(user);
+    // console.log(result1); // ['Mike', 30]
+    // const result2 = Object.entries(user);
+    // console.log(result2); // [Array(2), Array(2)]
+
+    // let arr = [
+    //   ['mon', '월'],
+    //   ['tue', '화'],
+    // ];
+
+    // const result4 = Object.fromEntries(arr);
+    // console.log(result4); // {mon: '월', tue: '화'}
+
+    // property key : 문자형
+
+    // const obj = {
+    //   1 : '1입니다',
+    //   false : '거짓',
+    // };
+
+    // Object.keys(obj);
+
+    // console.log(obj);
+
+    // obj["1"];
+    // obj['false'];
+
+    
+  </script>
+</body>
+
+</html>

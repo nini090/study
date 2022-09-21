@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>목록관련</title>
+</head>
+<body>
+    <h1>목록관련</h1>
+        <nav>
+            <ul class="menu">
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">HTML5</a></li>
+                <li><a href="#">CSS3</a></li>
+                <li><a href="#">Javascript2015</a></li>
+                <li><a href="#">JQuery</a></li>
+            </ul>
+        </nav>
+        <style>
+            ul.menu {
+                width: 80vw; /*화면너비의 1/100(80vw=80%)*/
+                padding-left: 0;
+                margin: auto;
+            }
+            ul.menu li {
+                list-style-type: none;
+                float:left;
+                width: 8em;
+                height: 2.5em;
+                background-color: gray;
+                text-align: center;
+                border-right: 1px solid white;
+                box-shadow: 1px 1px 1px black;
+            }
+            ul.menu li a {
+                display: block;
+                padding: .5em;
+                text-decoration: none;
+                color: beige;
+            }
+            ul.menu li:hover {
+                background-color: black;
+                
+            }
+            ul.menu li:hover a { 
+                color: aliceblue;
+            }
+            ul.menu li:first-child {
+                border-top-left-radius: .5em;
+                border-bottom-left-radius: .5em;
+            }
+            ul.menu li:last-child {
+                border-top-right-radius: .5em;
+                border-bottom-right-radius: .5em;
+                border-right: 0;
+            }
+        </style>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>클래스 제어하기</title>
+  <style>
+    table {
+      border: 1px solid #000;
+      border-collapse: collapse;
+      width: 500px;
+      margin: 10px auto;
+    }
+
+    th,
+    td {
+      text-align: center;
+      border: 1px solid #000;
+      padding: 5px;
+    }
+
+    .gunseo {
+      font-family: 궁서, cursive;
+    }
+
+    .on {
+      background-color: steelblue;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>클래스 제어하기</h1>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="5">
+          <h2>수강신청</h2>
+        </th>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="5">
+          <!-- this용법 2. 태그의 inline event 속성 안의 this는 현재 tag객체를 가리킨다 -->
+          <input type="checkbox" id="checkAll" onclick="checkAllOrNone(this);">
+          <label for="checkAll">전체선택/해제</label>
+        </th>
+      </tr>
+      <tr>
+        <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject1"><label
+            for="subject1">국어</label></td>
+        <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject3"><label
+            for="subject3">수학</label></td>
+        <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject2"><label
+            for="subject2">영어</label></td>
+        <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject4"><label
+            for="subject4">사회</label></td>
+        <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject5"><label
+            for="subject5">과학</label></td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    // this용법 1. 전역에서 this는 window객체를 가리킨다 
+    console.log(this); // window객체
+
+    function checkSubject(subject) {
+      // 부모 td .on 처리
+      console.log(subject);
+      // console.log(subject.parentElement);
+      const td = subject.parentElement;
+      console.dir(td);
+
+      if (subject.checked)
+        td.classList.add("on");
+      else
+        td.classList.remove("on");
+      handleTdClass(subject);
+      // 전체 체크박스 처리
+      const subjects = document.querySelectorAll("[name=subject]"); // 체크박스
+      const checkedSubjects = document.querySelectorAll("[name=subject]:checked"); // 체크된 체크박스
+      // console.log(subjects, checkedSujects);
+      checkAll.checked = (subjects.length == checkedSubjects.length);
+
+    }
+    function checkAllOrNone(obj) {
+      // console.log(obj);
+      const checkAll = document.getElementById("checkAll");
+      // console.log(checkAll.checked);
+      const subjects = document.getElementsByName("subject");
+      for (i = 0; i < subjects.length; i++) {
+        const subject = subjects[i];
+        subject.checked = obj.checked; // checkd처리
+        handleTdClass(subject); //부모 td .on처리      
+      }
+
+    }
+
+    function handleTdClass(subject) {
+      const td = subject.parentElement;
+      // td.className = subject.checked ? "gunseo on" : "gunseo";
+      // toggle(class), contains(Class):boolean
+      if (subject.checked)
+        td.classList.add("on");
+      else
+        td.classList.remove("on");
+    }
+  </script>
+</body>
+
+</html>

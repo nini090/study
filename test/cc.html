@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카피</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <form action="insert.no" method="post">
+    <fieldset>
+      <legend>공지사항 작성하기</legend>
+      <label for="title">제목</label>
+      <input type="text" name="title" id="title" placeholder="제목을 입력하세요.">
+      <br>
+      <label for="content">내용</label>
+      <textarea name="memo" name="content" id="content" cols="22" rows="10" placeholder="내용을 입력하세요."
+        style="resize: none;"></textarea>
+      <label for="uploadFile">첨부파일</label>
+      <input type="file" name="uploadFile" value="파일선택">
+      <br>
+      <button id="formButton">작성하기</button>
+    </fieldset>
+  </form>
+  <br>
+  <hr>
+  <br>
+  <table>
+    <thead>
+      <tr>
+        <th id="no">번호</th>
+        <th colspan="2" id="titlename">제목</th>
+        <th id="nickname">작성자</th>
+        <th>작성일</th>
+        <th>조회수</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

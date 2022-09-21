@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 상호작용 | innerHTML | innerText</title>
+</head>
+<body>
+    <h1>사용자 상호작용 | innerHTML | innerText</h1>
+    <button onclick="test1();">alert | console</button>
+    <button onclick="test2();">confirm</button>
+    <button onclick="test3();">prompt</button>
+    <div class="area"></div>
+    <script>
+        /**
+         * alert
+         * 
+         * console
+         */
+        function test1() {
+            // alert("안녕하세요!"); // 사용자
+            console.log("hello"); // 개발용
+            console.error("비~~상~~~비~~~상~~~~"); // 에러메세지 출력
+            console.dir(document); // 계층구조 확인
+            console.time('abc1234'); // 스탑워치시작
+            for(let i = 0;i < 100;i++)
+                console.log(i);
+            console.timeEnd('abc1234'); //스탑워치끝
+        }
+        /**
+         * confirm
+         * - 사용자로부터 예/아니오, true/false 값이 필요한 경우
+         * - 확인 true
+         * - 취소(esc) false
+         */
+        function test2() {
+            const bool = confirm("이 제품을 장바구니에서 제거하시겠습니까?");
+            console.log(bool);
+            if(bool) {
+                //제품을 장바구니에서 제거 프로세스 시작..
+                alert("제품을 장바구니에서 제거했습니다.");
+            }
+            else {
+                alert("취소완료!");
+            }
+        }
+        /**
+         * prompt
+         * - 사용자로부터 한 줄 입력을 받는 메소드.
+         * - string 반환
+         * - 취소를 누른경우 null값을 반환
+         */
+        function test3() {
+            const name = prompt("이름을 입력하세요", "김경룡");
+            console.log(name);
+            // js boolean으로 자동형변환처리
+            // 값이 있는 것은 true : "abc", 1000, -10, 12.2, {}, []
+            // 값이 없으면 false : "", 0, 0.0, undefined, null, NaN
+            if(name) {
+                document.querySelector(".area").innerHTML = `${name}님, 반갑습니다^_^~`; 
+                // string template(ES6) - backtick으로 감싸기, 개행/탭문자 처리가능
+                // document.querySelector(".area").innerHTML = name+"님 반갑습니다^_^~";
+            }
+            else {
+                alert(`올
+  바
+    른
+      이름을 입력해주세요~`);
+            }
+        }
+    </script>
+    <hr>
+    <div id="foo">안녕하소, 소인은 <mark>박혁거세</mark>라 하오.</div>
+    <div id="bar"></div>
+    <button onclick="test4();">innerHTML</button>
+    <button onclick="test5();">innerText</button>
+    <button onclick="test6();">outerHTML</button>
+    <script>
+        /**
+         * innerHTML
+         * - getter 자식 html태그까지 포함해서 반환
+         * - setter 문자열의 html태그처리
+         * 
+         */
+        function test4() {
+           console.log(foo.innerHTML);  // 안녕하소, 소인은 <mark>박혁거세</mark>라 하오.
+           bar.innerHTML = foo.innerHTML
+        }
+        /**
+         * innerText | textContent
+         * - getter 자식 html태그를 제외하고, text node만 반환.
+         * - setter 문자열 html태그를 처리안함(문자 그대로 처리)
+         */
+        function test5() {
+            console.log(foo.innerText); // 안녕하소, 소인은 박혁거세라 하오.
+        }   bar.innerText = foo.innerHTML;
+        /**
+         * outerHTML
+         * - getter 태그자신을 포함한 문자열 반환(html태그 포함)
+         * - setter 태그자신을 교체(기존태그는 삭제되고, 새태그에 DOM에 새로 등록된다)
+         */
+        function test6() {
+            console.log(foo.outerHTML); //<div id="foo">안녕하소, 소인은 <mark>박혁거세</mark>라 하오.</div>
+            foo.outerHTML = `<div id = "zoo"><mark>박혁거세</mark>야~ 잘가라!</div>`;
+        }
+    </script>
+</body>
+</html>

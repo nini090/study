@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비동기처리</title>
+</head>
+
+<body>
+  <h1>비동기처리</h1>
+  <!-- 
+  동기 synchronous | 비동기 asynchoronous
+
+  자바스크립트는 싱글쓰레드로 실행!
+  비동기처리함수(Timer API, DOM관련, 이벤트처리, Ajax요청)호출 시 , 백그라운드에 처리위임.
+  동기함수의 모든 처리가 끝나면(call stack이 비워지면) 실행됨.
+  - heap
+  - call stack
+  - Web APIs
+  - Callback Queue
+  - Event Loop
+ -->
+  <button id="btn1">ASYNC - Timer</button>
+  <button id="btn2">ASYNC - DOM</button>
+  <button id="btn3">ASYNC - DOM 연속</button>
+  <hr>
+  <script>
+    /**
+     * 비동기처리 함수 - Timer API
+     */
+    btn1.onclick = () => {
+      // 동기식 처리
+      let result = foo();
+      console.log(result);
+
+      // 비동기식 처리
+      let result2;
+      // Timer API 함수들은 호출과 동시에 background(Web APIs)에 처리를 위임한다.
+      setTimeout(() => {
+        result2 = 100;
+        console.log('result2@callback: ', result2); // 1. 코드 위치 수정
+      }, 0);
+      console.log('result2: ', result2);
+
+    };
+
+    const foo = () => {
+      console.log('boo');;
+      return 100;
+    }
+
+    /**
+     * 비동기처리 - DOM관련, event처리
+     */
+    btn2.onclick = () => {
+      loadScript("js/1.js", () => {
+        console.log('load완료!');
+        bar();
+      });
+      // bar(); // Uncaught ReferenceError: bar is not defined
+    };
+
+    const loadScript = (path, callback) => {
+      const script = document.createElement('script');
+      script.src = path;
+      script.onload = callback; // 2. callback함수
+      document.head.append(script); // 비동기처리
+    };
+
+    /**
+     * js/1.js 로드 - bar() 다음에 로드할 js의 주소값 리턴
+     */
+    btn3.onclick = () => {
+      loadScript('js/1.js', () => {
+        const path = bar();
+        loadScript(path, () => {
+          car();
+        });
+      });
+    };
+  </script>
+  <button id="btn4">@실습문제 - 배경색 연속변경</button>
+  <div class="bg-box"></div>
+  <style>
+    .bg-box {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      border: 1px solid black;
+    }
+  </style>
+  <script>
+    /**
+     * .bg-box 배경색을 1초 단위로 변경
+     */
+    btn4.onclick = () => {
+      const target = document.querySelector(".bg-box");
+
+      setTimeout(() => {
+        target.style.backgroundColor = "red";
+        setTimeout(() => {
+          target.style.backgroundColor = "orange";
+          setTimeout(() => {
+            target.style.backgroundColor = "yellow";
+            setTimeout(() => {
+              target.style.backgroundColor = "green";
+              setTimeout(() => {
+                target.style.backgroundColor = "blue";
+                setTimeout(() => {
+                  target.style.backgroundColor = "darkblue";
+                  setTimeout(() => {
+                    target.style.backgroundColor = "purple";
+                  }, 1000);
+                }, 1000);
+              }, 1000);
+            }, 1000);
+          }, 1000);
+        }, 1000);
+      }, 1000);
+
+    }
+  </script>
+</body>
+
+</html>

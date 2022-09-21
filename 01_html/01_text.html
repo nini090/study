@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>text</title>
+</head>
+<body>
+    <h1>문자관련</h1>
+    <a href="index.html">인덱스로 돌아가기</a>
+
+    <!-- 
+        block 요소 : 화면 끝까지 영역을 차지
+        inline 요소 : content만큼만 영역을 차지
+     -->
+
+    <!-- heding h1 ~ h6 -->
+    <!-- h2{HelloWorld} -->
+    <!-- h1{Hello$}*6 -->
+    <!-- h${HelloWorld}*6 -->
+    <h1>HelloWorld</h1>
+    <h2>HelloWorld</h2>
+    <h3>HelloWorld</h3>
+    <h4>HelloWorld</h4>
+    <h5>HelloWorld</h5>
+    <h6>HelloWorld</h6>
+
+    <!-- paragraph 문단태그-->
+    <p>안녕하세요.</p>
+    <p>반갑습니다.</p>
+    <p>좋은 밤 보내세요.</p>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit provident nostrum nemo pariatur nam porro, sit aliquam quidem vero adipisci rem enim, exercitationem earum officiis! Tempore fugiat asperiores fuga error.</p>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora similique aut, fuga hic iste quod reprehenderit voluptate facilis ducimus est quis ut, impedit corrupti veniam, expedita officia nisi possimus facere.</p>
+   
+     <!-- span 짧은 문장 태그-->
+    <!-- 공백/개행문자는 딱 하나의 공백문자로 처리. -->
+    <span>안녕하세요.</span>
+    <br> <!-- html의 개행태그 -->
+    <span>반갑습니다.</span>
+    <br>
+    <span>좋은 밤 보내세요.</span>
+    <br>
+
+    <!-- 공백문자 &nbsp; -->
+    안녕하세요. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    반갑습니다.
+    좋은 밤 보내세요.
+
+    <!-- <p>"특수문자" & <p>태그</p></p> -->
+    <!-- http://kor.pe.kr/util/4/charmap2.htm -->
+    <p>&quot;특수문자&quot; &amp; &lt;p&gt;태그&lt;&#47;p&gt;</p>
+
+    <!-- pre pre-formatted태그 -->
+    <pre>
+안녕
+        잘가
+            반가웠어~
+    </pre>
+    <!-- 수평선 태그 -->
+    <hr>
+
+    <!-- 
+        semantic tag 
+        - 의미가 있는 태그. 정보가 가진 성격에 적절한 태그를 사용할 것.
+    -->
+    
+    <!-- phrase tag -->
+
+    <!-- blockquote 인용구 태그 -->
+    <!-- screen reader, 포탈 검색봇 -->
+    <blockquote cite="http://iei.or.kr">소 잃고 외양간 고치랴~</blockquote>
+
+    <!-- acronym 축약어 -->
+    <acronym title="Hyper Text Markup Language">HTML</acronym>을 공부합시다.
+
+    <!-- code 코드 -->
+    <pre>
+     <code>
+        function foo(a, b) {
+            return a + b;
+        }        
+     </code>
+    </pre>
+
+    <!-- keyboard 키값 -->
+    취소하려면 <kbd>Ctrl</kbd>+<kbd>Z</kbd>를 누르세요.
+    <br>
+
+    <!-- 강조 (중첩가능)-->
+    <em>기울여 강조</em><br>
+    <strong>볼드체로 강조</strong><br>
+    <mark>하이라이트 효과로 강조</mark><br>
+    <del>취소선 처리</del><br>
+    <ins>밑줄로 강조</ins><br>
+
+    <em><strong>몹시 강조!!!</strong></em>  <br>
+
+    <br>
+
+    <b>볼드체효과</b><br>
+    <i>이탤릭체효과</i>
+    <br>
+    <br>
+    <span style="font-weight: bold;">css볼드효과</span>
+    <br>
+    <span style="font-style: italic;">css이탤릭체 효과</span>
+    <br><br><br><br><br><br>
+
+    <div class="block1">block 요소 실헙입니다~</div>
+    <p class="block1">p태그 불낙입니다.</p>
+
+    <span class="inline1">inline요소 실험입니다!</span>
+    <em>em태그 인난입니다(줄바꿈x)</em>
+    <br><br><br><br><br><br>
+
+    <style>
+        .block {
+            width: 50%;
+            height: 50%;
+            margin: 50px;
+            padding: 50px;
+        }
+        /* .inline1 {
+            width: 50%;
+            height: 50%;
+            margin: 50px;
+            padding: 50px;
+        } */
+    </style>
+    
+
+    
+</body>
+</html>

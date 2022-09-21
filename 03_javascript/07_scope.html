@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>변수유효범위</title>
+</head>
+<body>
+    <h1>변수유효범위</h1>
+    <button onclick="test1();">확인</button>
+    <script>
+        // block scope - const, let
+        // function scope - var
+
+        //전역공간
+        const a = '안녕';
+
+        function test1() {
+            console.log(a);
+
+            const b = '잘가'; // 지역변수
+            console.log(b);
+        }
+        // console.log(b); 
+
+        for(let i =0;i<10;i++) {
+            let k = i;
+        }
+        // console.log(i);
+        // console.log(k);
+    </script>
+
+    <button onclick="test2();">var</button>
+    <script>
+        // function scope 함수스코프
+        // 함수블럭외에는 무시
+        // 전역에 선언된 var키워드는 window전역객체의 속성으로 등록된다
+
+        for(var i = 0;i < 10;i++) {
+
+        }
+        console.log(i);
+        function test2() {
+            var m = 99;
+            console.log(m);
+
+            // if블럭은 함수블럭이 아니므로 안밖을 구분하지 않는다.
+            // var키워드는 변수 중복선언을 허용한다
+            if(true) {
+                var m = 80;
+            }
+            var m = 70;
+            console.log(m); // 70
+        }
+        // console.log(m);
+
+    </script>
+</body>
+</html>

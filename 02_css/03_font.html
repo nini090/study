@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글꼴관련</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=East+Sea+Dokdo&family=Gowun+Batang:wght@400;700&family=Poor+Story&family=Stylish&family=Yeon+Sung&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>글꼴관련</h1>
+    <div id="font-wrapper">
+        <p id="p1">가나다라마바사 ABCDEFG hijklmnop 1234567890</p>
+        <p id="p2">가나다라마바사 ABCDEFG hijklmnop 1234567890</p>
+        <p id="p3">가나다라마바사 ABCDEFG hijklmnop 1234567890</p>
+        <p id="p4">가나다라마바사 ABCDEFG hijklmnop 1234567890</p>
+    <style>
+        #font-wrapper {
+            font-size: 24px;
+        }
+        #p1 {
+            /* 왼쪽부터 우선순위대로 적용 */
+            /* 맨 오른쪽에는 generic family폰트 중 하나를 작성 */
+            /* serif, sans-serif, cursive, monospace */
+            font-family: 와따따뚜겐체, 궁체, monospace;
+            font-size: 32px; /*고정 크기 */
+        }
+        #p2 {
+            font-family: 'Poor Story', cursive;
+            font-size: 2em; /*(부모에 물려받은)기본글꼴에 대해 상대 크기 */
+            font-size: 2rem; /* root 글꼴에 대해 상대크기 */
+            font-weight: bold; /* 100 ~ 900, bold, bolder, lighter */
+            font-style: italic;
+        }
+        #p3 {
+            font-family: 'Gowun Batang', cursive;
+            font-size: 200%; /*기본글꼴에 대해 상대 크기 */
+        }
+        #p4 {
+            /*font: font-style font-variant font-weight font-size/line-height font-family*/
+            font:italic bold 24px/32px 'East Sea Dokdo', cursive;
+        }
+    </style>
+    </div>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Javascript</title>
+</head>
+
+<body>
+  <button onclick="test1();">Dynamic Typing</button>
+  <button onclick="test2();">자료형</button>
+  <script>
+    function test1() {
+      let k; // 선언
+      k = 123;
+      console.log(typeof k, k);
+      k = '안녕';
+      console.log(typeof k, k);
+    }
+
+    function test2() {
+      const s = 'Hi';
+      console.log(typeof s, s);
+
+      const a = 10.2;
+      console.log(typeof a, a);
+      console.log(10 / 3);
+
+      const bool = !false;
+      console.log(typeof bool, bool);
+
+      const today = new Date();
+      console.log(typeof today, today);
+
+      const arr = [1, 2, 3]
+      console.log(typeof arr, arr);
+      console.log(arr[0], arr[2]);
+
+      const obj = {
+        name: '김경룡',
+        age: 20,
+        phone: '010-1234-1234',
+        married: false,
+        fNums: [1, 2, 3],
+        friend: {
+          name: '고길동',
+          age: 99,
+          fNums: [1, 2, 3, 4]
+        }
+      };
+      console.log(typeof obj, obj);
+      console.log(obj.name);
+      console.log(obj.age);
+      console.log(obj.phone);
+      console.log(obj.married);
+      console.log(obj.fNums);
+      console.log(obj.friend);
+
+      function foo() {
+        console.log('foo!');
+      }
+      console.log(typeof foo, foo);
+      foo();
+    }
+
+  </script>
+  <br>
+  <hr>
+  <button onclick="test3();">if</button>
+  <button onclick="test4();">switch</button>
+  <button onclick="test5();">for</button>
+  <button onclick="test6();">while</button>
+  <button onclick="test7();">@구구단</button>
+  <script>
+    function test3() {
+      const n = Math.floor(Math.random() * 10 + 1);
+      console.log(n);
+      if (n % 2 == 0) {
+        console.log("짝수");
+      }
+      else {
+        console.log("홀수");
+      }
+    }
+
+    function test4() {
+      const n = prompt("1 ~ 3 사이의 정수를 입력하세요");
+      switch (n) {
+        case "1": console.log('1을 입력하셨습니다.'); break;
+        case "2": console.log('2를 입력하셨습니다.'); break;
+        case "3": console.log('3을 입력하셨습니다.'); break;
+        default: console.log('다시 입력해주세요.');
+      }
+    }
+
+    function test5() {
+      for (let i = 0; i < 10; i++) {
+        console.log(i);
+      }
+      const arr = ['a', 'b', 'c', 'd'];
+
+      for (let i in arr) {
+        console.log(i, arr[i]);
+      }
+
+      for (let ch of arr) {
+        console.log(ch);
+      }
+    }
+
+    function test6() {
+      let i = 1;
+      while (i <= 10) {
+        console.log(i++);
+      }
+
+      let yn;
+      do {
+        yn = prompt("계속하시겠습니까?(y/n)");
+      } while (yn == 'y');
+    }
+
+    function test7() {
+      const dan = Number(prompt('2 ~ 9 사이의 숫자를 입력하시오'));
+      if (2 <= dan && dan <= 9)
+        gugudan(dan);
+    }
+    function gugudan(dan) {
+      for (let i = 2; i < 10; i++) {
+        console.log(dan, 'X', i, '=', dan * i);
+      }
+    }
+
+  </script>
+  <br>
+  <hr>
+  <h6>DOM 접근</h6>
+  <div>
+    <ul>
+      <li class="group1" id="hw1" title="HelloWorld1">HelloWorld1</li>
+      <li class="group1" id="hw2">HelloWorld2</li>
+      <li class="group2" id="hw3" title="HelloWorld3">HelloWorld3</li>
+      <li class="group2" id="hw4">HelloWorld4</li>
+      <li class="group1 group2" id="hw5">HelloWorld5</li>
+    </ul>
+    <br>
+    <input type="checkbox" name="fruit" id="fruit1" value="사과"><label for="fruit1">사과</label>
+    <input type="checkbox" name="fruit" id="fruit2" value="바나나"><label for="fruit2">바나나</label>
+    <input type="checkbox" name="fruit" id="fruit3" value="아보카도"><label for="fruit3">아보카도</label>
+    &nbsp;&nbsp;
+    <input type="checkbox" id="fruitCheckAll" onchange="test8();"><label for="fruitCheckAll">모두 선택/해제</label>
+  </div>
+  <div>
+    <input type="text" id="username" name="username" placeholder="username">
+    <br>
+    <input type="range" name="point" id="point" min="0" max="100" value="0" 
+    oninput="pointView.innerHTML = point.value;">
+    <span id="pointView">0</span>점
+  </div>
+  <button onclick="test9()">getElemetById</button>
+  <button onclick="test10()">getElemetsByTagName</button>
+  <button onclick="test11()">getElemetsByClassName</button>
+  <button onclick="test12()">getElemetsByName</button>
+  <button onclick="test13()">>@실습문제 - #username</button>
+  <br>
+  <button onclick="test15()">querySelector</button>
+  <button onclick="test16()">querySelectorAll</button>
+  <script>
+    function test9() {
+      console.dir(document);
+      const hw3 = document.getElementById("hw3");
+      console.dir(hw3);
+      console.log(hw3.style.color);
+      hw3.style.color = 'pink';
+      console.log(hw3.style.color);
+    }
+
+    function test10() {
+      const list = document.getElementsByTagName("li");
+      console.log(list);
+      for (let i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'khaki';
+        list[i].style.color = 'white';
+      }
+    }
+
+    function test11() {
+      const group1 = document.getElementsByClassName("group1");
+      console.log(group1);
+      for (let i = 0; i < group1.length; i++) {
+        const li = group1[i];
+        const content = li.innerHTML;
+        li.innerHTML = content.replace('HelloWorld', '안녕..??');
+      }
+    }
+    function test12() {
+      const fruits = document.getElementsByName("fruit");
+      console.log(fruits);
+      const arr = [];
+      for (let i = 0; i < fruits.length; i++) {
+        const chk = fruits[i];
+        if (chk.checked) {
+          arr.push(chk.value);
+        }
+      }
+      alert(arr + "를 선택하셨습니다.");
+    }
+
+    function test8() {
+      const fruitCheckAll = document.getElementById("fruitCheckAll");
+
+      const fruits = document.getElementsByName("fruit");
+      for (let i = 0; i < fruits.length; i++) {
+        fruits[i].checked = fruitCheckAll.checked;
+      }
+    }
+
+    function test13() {
+      const username = document.getElementsByName('username')[0];
+      alert(username.value);
+      username.value = '';
+    }
+
+    function test14() {
+      pointView.innerHTML = point.value;
+    }
+
+    function test15() {
+      const li = document.querySelector('ul li');
+    }
+
+    function test16() {
+      const group1 = document.querySelectorAll(".group1");
+
+      const li = document.querySelectorAll("ul li");
+    }
+  </script>
+<br>
+<hr>
+<style>
+  table {
+    border : 1px solid black;
+    border-collapse: collapse;
+    width: 400px;
+    margin: 10px auto;
+  }
+
+  td, th {
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+  }
+
+  .gunseo {
+    font-family: 궁서, cursive;
+  }
+
+  .on {
+    background-color: steelblue;
+    color: aliceblue;
+  }
+</style>
+<table>
+  <thead>
+    <tr>
+      <th colspan="5">수강신청</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th colspan="5">
+        <input type="checkbox" id="checkAll" onclick="checkAllOrNone(this);">
+        <label for="checkAll">전체선택/해제</label>
+        </th>
+    </tr>
+    <tr>
+      <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject1"><label
+          for="subject1">국어</label></td>
+      <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject3"><label
+          for="subject3">수학</label></td>
+      <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject2"><label
+          for="subject2">영어</label></td>
+      <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject4"><label
+          for="subject4">사회</label></td>
+      <td class="gunseo"><input type="checkbox" name="subject" onchange="checkSubject(this);" id="subject5"><label
+          for="subject5">과학</label></td>
+    </tr>
+  </tbody>
+</table>
+<script>
+  function checkSubject(subject) {
+    const td = subject.parentElement;
+
+    if(subject.checked) {
+      td.classList.add("on");
+    }
+    else {
+      td.classList.remove("on");
+    }
+    handleTdClass(subject);
+    const subjects = document.querySelectorAll("[name=subject");
+    const checkedSubjects = document.querySelectorAll("[name=subject]:checked");
+    checkAll.checked = (subject.length == checkedSubjects.length);
+  }
+
+  function checkAllOrNone(obj) {
+    const checkAll = document.getElementById("checkAll");
+    const subjects = document.getElementsByName("subject");
+    for(i = 0; i <subjects.length;i++) {
+      const subject = subjects[i];
+      subject.checked = obj.checked;
+      handleTdClass(subject);
+    }
+  }
+  
+  function handleTdClass(subject) {
+    const td = subject.parentElement;
+    if(subject.checked) {
+      td.classList.add("on");
+    }
+    else {
+      td.classList.remove("on");
+    }
+  }
+  
+
+</script>
+</body>
+
+</html>

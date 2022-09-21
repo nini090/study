@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선택자</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <h1 title="선택자">선택자</h1>
+    <!-- div>p#p$.group1{HelloWorld$}*5 -->
+    <div>
+        <p id="p1" class="group1" title="안녕1">HelloWorld1</p>
+        <p id="p2" class="group1">HelloWorld2</p>
+        <p id="p3" class="group2">HelloWorld3</p>
+        <p id="p4" class="group2" title="안녕4">HelloWorld4</p>
+        <p id="p5" class="group1 group2">HelloWorld5</p>
+    </div>
+    <style>
+    /* 태그명 */
+        p {
+            color: red;
+        }
+    /* 아이디 */
+    #p3 {
+        color: orange;
+    }
+    /* 클래스명 - 태그 그룹핑*/
+    /* 우선순위가 똑같으면 나중에 작성된 스타일 적용 */
+    .group1 {color: yellow;}
+    .group2 {color: green;} 
+    .group1.group2 {color: blue;}  /*띄어쓰기 유의*/
+    /* 선택자 나열 */
+    #p1, #p3 {
+        text-decoration: overline;
+    }
+    /* 속성 */
+    p[title] {
+        background-color: khaki;
+    }
+    [title=안녕1] {
+        color: palegreen;
+    }
+    /* 혼용 */
+    p[title] {
+        background-color: violet;
+    }
+    p.group2 {
+        font-weight: bolder;
+    }
+    </style>
+    <hr>
+    <!-- #parent>h2+u1>li*2 -->
+    <div id="parent">
+        <h2>h2 안녕</h2>
+        <ul>
+            <li>li Hello</li>
+            <li>li 니하오</li>
+        </ul>
+        <!-- div#child>h2+ul>li*2 -->
+        <div id="child">
+            <h2>h2 잘가</h2>
+            <ul>
+                <li>li Byebye</li>
+                <li>li 짜이찌엔</li>
+            </ul>
+        </div>
+    </div>
+    <style>
+        /* 직계자식 */
+        #parent > h2 {
+            background-color: red;
+        }
+        /* 후손 */
+        #parent h2 {
+            text-decoration: underline;
+        }
+        #parent > ul > li {
+            text-decoration: red underline;
+            color: orange;
+        }
+        #parent > #child > ul> li {
+            color: yellow;
+        }
+    </style>
+    <!-- div>span#front$*5 -->
+    <div>
+        <span id="front1">html</span>
+        <span id="front2">css</span>
+        <span id="front3">javascript</span>
+        <span id="front4">jquery</span>
+        <span id="front5">geolocation</span>
+        <strong id="front6">webstorage</strong>
+    </div>
+    <style>
+        /* 다음 형제요소 하나 */
+        #front3 + * {
+            color: royalblue;
+        }
+        /* 다음 형제요소 모두 */
+        #front3 ~ span {
+            text-decoration: line-through;
+        }
+    </style>
+    <hr>
+    <fieldset>
+        <legend>속성관련</legend>
+        <input type="text"><br>
+        <input type="text" name="username"><br>
+        <input type="email" name="useremail"><br>
+        <input type="text" name="petname"><br>
+        <input type="text" name="myusage"><br>
+    </fieldset>
+    <style>
+        /* 속성 */
+        [name] {
+            background-color: darkkhaki;
+        }
+        [type=text] {
+            background-color:darkorange;
+        }
+        [name^=user] {
+            background-color:pink;
+        }
+        [name$=user] {
+            background-color:hotpink;
+        }
+        [name*=us] {
+            background-color: darkslateblue;
+        }
+    </style>
+    <div>
+        <p id="clickme">
+            <a href="http://www.innerbody.com/htm/body.html">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
+             Cumque molestias doloribus, commodi illo itaque a sed, vero aperiam dolorum suscipit alias, pariatur voluptatibus atque? Molestiae modi doloremque excepturi? Nobis, a.</p>
+        <p id="hoverme">Laboriosam vitae enim perferendis, non soluta dolorem tempora, mollitia ut officia, amet sit corporis! Placeat repellat harum reprehenderit autem nemo mollitia adipisci hic, similique consequuntur fugiat neque suscipit quam beatae.</p>
+    
+        <p id="mylink">
+            <!-- <a href="http://www.innerbody.com/htm/body.html">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> -->
+    </div>
+    <style>
+        /* 가상클래스(pseudo-class) 선택자 */
+        #clickme:active {
+            background-color: lightcoral;
+            color: coral;
+        }
+        #hoverme:hover {
+            background-color: gold;
+            color: burlywood;
+        }
+        #mylink a {text-decoration: none;}
+        #mylink a:link {color: hotpink;} /*방문 전*/
+        #mylink a:visited {color: greenyellow;} /*방문 후*/
+        #mylink a:active {color: royalblue;} /*클릭*/
+        #mylink a:hover {color: black; text-decoration: underline;} /*호버*/     
+    </style>
+    <hr>
+    <div class="wrapper">
+        <input type="text" name="nickname" id="nickname">
+        <br>
+        <input type="checkbox" name="fruit" id="apple"><label for="apple">사과</label>
+        <input type="checkbox" name="fruit" id="pear"><label for="pear">배</label>
+        <input type="checkbox" name="fruit" id="peach"><label for="peach">복숭아</label>
+    </div>
+    <style> 
+    /* 가상클래스선택자 */
+    [name=nickname] {
+        outline: none;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        border-bottom: 1px solid black;
+    }
+    [name=nickname]:focus {
+    border-bottom: 3px;
+    }
+    [name=fruit]:checked {
+        width:50px; 
+        height:50px;
+    }
+    [name=fruit]:checked+label {
+        font-size: 50px;
+    }
+     </style>
+     <div id="container">
+         <p>CSS1</p>
+         <p>CSS2</p>
+         <p>CSS3</p>
+         <p>CSS4</p>
+         <p>CSS5</p>
+         <pre>CSS6</pre>
+     </div>  
+     <style>
+         /* 위치관련 가상클래스선택자 */
+        /* #container:first-child, #container:last-child {
+            color: navajowhite; 
+         } */
+            /* #container pre:last-child {
+                color: red;
+            } */
+            /* 1-based index */
+            /* 짝홀수표현 n의 배수로 처리 가능*/
+            /* #container:nth-child(2n+1) {
+                color: brown;
+            } */
+            /* 위치타입관련 가상클래스 선택자 */
+            /* #container p:first-of-type, #container p:last-of-type {
+                color: aqua;
+            } */
+            #container p:nth-of-type(2) {
+                color: aquamarine;
+            }
+     </style>
+     <hr>
+     <div class="box">
+         <p>안녕1</p>
+         <p>안녕2</p>
+         <p>안녕3</p>
+         <p>안녕4</p>
+         <p>안녕5</p>
+     </div>
+     <style>
+         /*부정(반전)선택자*/
+         /* :not(selector) */
+         .box :not(:nth-of-type(4)) {
+             color: blueviolet;
+             background-color: black;
+         }
+         /* 루트선택자 - 단독으로 사용. html(기본설정)*/
+         /* :root {
+             color: hotpink;
+         } */
+     </style>
+     <div id="articles">
+         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor impedit voluptatem laborum sint voluptates doloremque veritatis, mollitia eligendi quas, perferendis perspiciatis in nemo officiis? Illo doloribus fugiat ipsam aperiam consectetur.</p>
+         <p>Quaerat, laboriosam ipsum qui voluptas quia minus ex vel facere eveniet aliquam accusantium totam, quod nihil recusandae! Doloribus, unde quasi, veritatis debitis doloremque magnam odio voluptatibus nulla et eveniet in.</p>
+         <p>Nobis sit recusandae at consequatur excepturi temporibus quos natus iure enim incidunt repudiandae ad exercitationem quibusdam doloremque obcaecati aliquam dignissimos facere repellendus, sint earum! Quidem quam voluptate modi possimus magnam?</p>
+     </div>
+     <style>
+         /* 가상요소 pesudo-element 선택자 */
+         #articles ::selection {
+             background-color: tomato;
+             color: azure;
+         }
+         #articles ::first-letter {
+             font-size: 2em;
+         }
+         #articles p::before {
+             content: '🤴👱‍♂️';
+         }
+         #articles p::after {
+             content: '🤶🎅';
+         }
+     </style>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

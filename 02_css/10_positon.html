@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>position</title>
+    <style>
+        .outer {
+            background-color: lightcyan;
+            border: 1px solid #000;
+            margin-bottom: 200px;
+        }
+        .first {
+            width: 300px;
+            height: 300px;
+            background-color: antiquewhite;       
+        }
+        .second {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+            left: 50px;
+            top: 50px;
+        }
+        .third {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            left: 100px;
+            top: 100px;
+        }
+        .fourth {
+            width: 100px;
+            height: 100px;
+            background-color: tomato;
+            right: 50px;
+            bottom: 50px;
+            border-radius: 50%;
+        }
+        .relative {position: relative;}
+        .absolute {position: absolute;}
+        .fixed{position: fixed;}
+        .sticky {
+            position: sticky;
+            top: 0px;
+            background-color: yellow;
+            z-index: 999; /* z축기준 값이 클 수록 위에 위치*/
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>position</h1>
+    <!-- 
+        문서상 배치를 결정하는 속성
+        static(기본값)
+         - 문서에 정의된대로 배치하는 속성. offset(left, top, right, bottom) 무시.
+         - float등을 이용해 좌우배치.
+        relative
+         - 문서에 정의된대로 배치하는 속성. offset을 적용
+        absolute
+         - 요소를 겹쳐서 표현이 가능. 가장 가까운 static이 아닌 부모요소 기준 offset을 적용.
+        fixed
+         - viewport기준으로 offset 적용
+        sticky
+         - relative처럼 작동하다 특정 offset(top: 0px)에 다다르면  fixed처럼 작동
+     -->
+     <h2 class="sticky">sticky</h2>
+     <h2>static</h2>
+     <div class="outer">
+         <div class="first"></div>
+         <div class="second"></div>
+         <div class="third"></div>
+     </div>
+     <h2 class="sticky">relative</h2>
+     <div class="outer">
+         <div class="first"></div>
+         <div class="second relative"></div>
+         <div class="third relative" ></div>
+    </div>
+    <!-- div가 static이면 body 기준으로 offset이 작동됨 -->
+    <!-- 그래서 relative로 바꿔줌 -->
+    <h2 class="sticky">absolute</h2>
+    <div class="outer relative"> 
+        <div class="first"></div>
+        <div class="second absolute"></div>
+        <div class="third absolute" ></div>
+   </div>
+   <!-- 기준이 뷰포트가 됨 (화면 기준으로 따라다님) -->
+   <!-- 관리자랑 채팅하기 -->
+    <h2 class="sticky">fixed</h2>
+    <div class="fourth fixed"></div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

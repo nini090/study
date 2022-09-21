@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>구조분해할당</title>
+</head>
+
+<body>
+  <h1>구조분해할당</h1>
+  <!-- 비구조할당 -->
+  <h2>배열</h2>
+  <button onclick="test1();">기본</button>
+  <button onclick="test2();">활용</button>
+  <button onclick="test3();">@실습문제 - 산술연산</button>
+  <button onclick="test4();">@실습문제 - 학생점수</button>
+  <script>
+    /**
+     * 구조분해할당
+     * Destructuring Assignment
+     * - 배열/객체의 요소를 손쉽게 변수에 옮겨담는 문법
+     */
+    const test1 = () => {
+      const arr = [1, 2, 3];
+      // const a = arr[0];
+      // const b = arr[1];
+      // const c = arr[2];
+      // 좌항에 우항을 대입
+      // const[a,b,c] = arr;
+      // const[a,b] = arr; // 필요없는 번지 수는 생략 가능
+      // const[a,,b] = arr; // 필요없는 번지 수는 생략 가능(중간생략가능)
+      // const[a,b,c,d]=arr; // 존재하지 않는 인덱스는 indefined대입(오류 x)
+      // const [a, b, c= 99, d = 999 ] = arr; // 존재하지 않는 인덱스는 기본 값 처리 가능
+      const [a, ...brr] = arr; // 나머지 파라미터(변수) - 1번지 이후 brr변수에 대입
+      // console.log(arr,a,b,c);
+      // console.log(arr,a,b);
+      // console.log(arr,a,b,c,d);
+      console.log(arr, a, brr);
+
+      // 변수 값 교환
+      let v = 10;
+      let w = 20;
+      [v, w] = [w, v];
+      console.log(v, w); // 20, 10
+
+      // 나머지파라미터 vs 전개연산자
+      // 나머지파라미터 - 변수부 작성, 마지막에 딱 한 번만 사용 가능
+      const [x, ...xrr] = arr
+      console.log(arr, x, xrr);
+
+      // 전개연산자 - 배열 요소(값)을 전달할 때 사용. 여러번 사용 가능
+      const foo = ['가', '나', '다'];
+      const bar = ['라', '마', '바'];
+      const koo = [...foo, ...bar];
+      console.log(foo, bar, koo);
+    };
+    /**
+     * 배열 구조분해할당 - 활용
+     */
+    const test2 = () => {
+      // 매개변수부
+      console.log(process1([1, 2, 3]));
+      console.log(process1([10, 20, 30]));
+
+      // 리턴값
+      const [a, b] = process2();
+      console.log(a, b);
+    };
+
+    const process1 = ([a, b, c, d = 0.5]) => {
+      console.log(a, b, c, d);
+      return (a * b) / c + d;
+    };
+
+    const process2 = () => {
+      const a = Math.floor(Math.random() * 100) + 1;
+      const b = Math.floor(Math.random() * 200) + 101;
+      return [a, b];
+    };
+    /**
+     * @실습문제 - 산술연산
+     * - 두 수를 전달받아 합, 차, 곱, 몫, 나머지를 동시에 리턴 함수 작성
+     * 
+     * clac([10. 3])
+     * clac([5, 7])
+     */
+    const test3 = () => {
+      let [sum, subtract, multiply, divide, remainder] = calc([10, 3]);
+      [sum, subtract, multiply, divide, remainder] = calc([5, 7]);
+
+      console.log(sum);
+      console.log(subtract);
+      console.log(multiply);
+      console.log(divide);
+      console.log(remainder);
+    };
+
+    const calc = ([x, y]) => [x + y, x - y, x * y, Math.floor(x / y), x % y];
+
+    /**
+   * @실습문제 - 학생점수
+   * 다음과 같이 출력하는 printStudentInfo함수를 작성하세요.
+   * - printStudentInfo([name, gender, ...scores])
+   * 
+   * - 홍길동(남) 평균 80.0점
+   * - 신사임당(여) 평균 79.3점
+   * - 전봉준(남) 평균 70.7점
+   * 
+   */
+    const test4 = () => {
+      const data = "홍길동,남,90,80,70|신사임당,여,88,100,50|전봉준,남,55,80,77";
+      // 전처리
+      console.log(
+        data.split("|") // ["홍길동,남,90,80,70", "신사임당,여,88,100,50", "전봉준,남,55,80,77"]
+          .map((str) => str.split(",")) // [["홍길동","남","90","80","70"], ["신사임당","여","88","100","50"], ["전봉준","남","55","80","77"]
+          .forEach((arr) => printStudentInfo(arr))
+      );
+    };
+    const printStudentInfo = ([name, gender, ...scores]) => {
+      // 후처리 - 총점/평균
+      const sum = scores.map(s => Number(s))
+        .reduce((sum, n) => sum + n);
+      const avg = Math.round(sum / scores.length * 10) / 10;
+      console.log(`${name}(${gender}) 평균 ${avg}점`);
+    };
+  </script>
+
+  <h2>객체</h2>
+  <button onclick="test5();">기본</button>
+  <button onclick="test6();">중첩객체</button>
+  <button onclick="test7();">@실습문제 - academy info</button>
+  <button onclick="test8();">@실습문제 - 가족관계</button>
+  <script>
+    /**
+     * 구조분해할당 - 객체
+     * - 객체의 요소(속성값)을 변수에 쉽게 옮겨담는 문법
+     */
+    const test5 = () => {
+      const obj = {
+        a: 1,
+        b: '안녕',
+        c: true
+      };
+      // const a = obj.a;
+      // const b = obj.b;
+      // const c = obj.c;
+      // const {a,b,c} = obj;
+      // console.log(a,b,c); // 1 '안녕' true
+
+      // const {b,a,d} = obj; // 변수 선언 순서는 중요하지 않다
+      // console.log(a,b,d); // 1, '안녕', undefined
+
+      // const {b,a,d = '123'} = obj; // 변수 선언 순서는 중요하지 않다
+      // console.log(a,b,d); // 1, '안녕', 123
+
+      // const{a:num,b:str} = obj;
+      // console.log(num,str); // 1, '안녕'
+
+      const { a, ...foo } = obj;
+      console.log(a, foo); // 1 {b: '안녕', c: true}
+    };
+    /**
+     * 중첩객체
+     */
+    const test6 = () => {
+      const user = {
+        id: 'honggd',
+        username: {
+          firstname: '길동',
+          familyname: '홍'
+        },
+        age: 33,
+        sns: ['twitter', 'instagram', 'tictok']
+      };
+
+      // const {id, username:{firstname}, sns:[,mainSNS ]} = user;
+      // console.log(id, firstname, mainSNS);
+      // console.log(username, sns); // 오류
+
+      const { username: { firstname: name } } = user;
+      console.log(name); // 길동
+
+      // 동일한 객체를 매개인자로 전달할 때, 각 함수 별로 원하는 속성만 꺼내서 작업이 가능
+      processId(user);
+      processSNS(user);
+      processName(user);
+    };
+
+    const processId = ({ id }) => console.log('processId:', id);
+    const processName = ({ username: { firstname, familyname } }) => console.log('processName :', firstname, familyname);
+    // const processSNS = ({sns}) => console.log('processSNS :', sns);
+    const processSNS = ({ sns: [mainSns, subSns] }) => console.log('processSNS :', mainSns, subSns);
+
+    /**
+     * @실습문제 - academy info
+     * - getAcademyInfo 함수에서 제공하는 객체의 정보를 활용해 다음 정보를 출력
+     * - 교육원 이름, url, 대표번호 1개
+     * - 각 지원 별 주소와 강의장 갯 수
+     *      - 강남지원 : 서울시 강남구 역삼동 소재, 5개 강의장
+     */
+    const test7 = () => {
+      const { name, url, tel: [mainTel], branches } = getAcademyInfo();
+      console.log(name);
+      console.log(url);
+      console.log(mainTel);
+      console.log(
+        Object.keys(branches)
+          .forEach((brancheName) => {
+            // console.log(brancheName, branches[brancheName]);
+            const { addr, classroom } = branches[brancheName];
+            console.log(`> ${brancheName} : ${addr}, ${classroom.length}개 강의장`);
+          })
+      );
+    };
+
+    const getAcademyInfo = () => ({
+      name: 'KH정보교육원',
+      url: 'http://iei.or.kr',
+      tel: ['070-1234-5678', '070-1234-5678', '070-1234,5959'],
+      branches: {
+        '강남 지원': {
+          addr: '서울시 강남구 역삼동',
+          classroom: ['A', 'B', 'C', 'D', 'M']
+        },
+        '종로 지원': {
+          addr: '서울시 종로구 삼청동',
+          classroom: ['X', 'Y', 'Z']
+        },
+        '당산 지원': {
+          addr: '서울시 영등포구 당산동',
+          classroom: ['101', '102', '103', '104']
+        }
+      }
+    });
+    /**
+     * @실습문제 - 가족관계 출력
+     * - 이름 : 홍길동, 아빠 : 홍진수, 엄마 : 홍진경, 형제자매 : 홍지민
+     * - 이름 : 신사임당, 아빠 : 신강춘, 엄마 : 하희라, 형제자매 : 신하준
+     */
+    const test8 = () => {
+      getPeople().forEach((person) =>{
+        // console.log(person);
+        const{name, family:{father,mother,sister,brother}} = person;
+        console.log(`이름 : ${name}, 아빠 : ${father}, 엄마 : ${mother}, 형제자매 : ${sister || brother}`);
+      });
+    };
+
+    const getPeople = () => [
+      {
+        name : '홍길동',
+        family : {
+          father : '홍진수',
+          mother : '홍진경',
+          sister : '홍지민'
+        },
+        age : 35
+      }, 
+      {
+        name : '신사임당',
+        family : {
+          father : '신강춘',
+          mother : '하희라',
+          brother : '신하준'
+        },
+        age : 25
+      }
+    ];
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>web storage</title>
+  <style>
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script>
+    widow.onload = () => renderGuestbook();
+  </script>
+</head>
+
+<body>
+  <h1>web storage</h1>
+  <!-- 
+    window객체 하위에 속성으로 관리됨.
+    개발도구 application 탭 하위에서 시각화해서 관리할 수 있다.
+      - localStorage : 도메인 별로 관리. 직접 삭제하기 전까지 영구적으로 보관
+      - sessionStorage : 도메인 별로 관리. 접속한 동안만 데이터를 유지
+     -->
+  <h2>CRUD</h2>
+  <fieldset>
+    <legend>Local Storage</legend>
+    <input type="text" id="key" placeholder="key">
+    <input type="text" id="value" placeholder="value">
+    <hr>
+    <button id="btn1">저장</button>
+    <button id="btn2">조회</button>
+    <button id="btn3">삭제</button>
+    <button id="btn4">전체삭제</button>
+  </fieldset>
+  <script>
+    /**
+     * create
+     */
+    btn1.onclick = () => {
+      const keyVal = key.value;
+      const valueVal = value.value;
+
+      // 유효성 검사
+      if (!keyVal || !valueVal) return;
+
+      // 저장
+      localStorage.setItem(keyVal, valueVal);
+
+      // 초기화
+      key.value = '';
+      value.value = '';
+    };
+
+    /**
+     * read
+     */
+    btn2.onclick = () => {
+      const keyVal = key.value;
+
+      const value = localStorage.getItem(keyVal);
+      console.log(typeof value, value);
+
+      if (value) {
+        document.querySelector("#value").value = value;
+      }
+      else {
+        alert(`${keyVal}에 해당하는 값이 없습니다.`)
+        key.select();
+      }
+    };
+    /**
+     * delete
+     */
+    btn3.onclick = () => {
+      const keyVal = key.value;
+
+      // 제거
+      localStorage.removeItem(keyVal);
+
+      // 초기화
+      key.value = '';
+      value.value = '';
+    };
+    /**
+     * removeAll
+     */
+    btn4.onclick = () => {
+      localStorage.clear();
+    }
+  </script>
+
+  <h2>객체 | 배열 저장</h2>
+  <button id="btn5">실행</button>
+  <script>
+    /**
+     * web storage에 저장되는 key/value는 모두 string타입이다.
+     * - 배열, 객체를 그대로 저장하게 되면 toString 호출결과를 저장한다. 즉 데이터가 유실된다. 
+     */
+    btn5.onclick = () => {
+      const arr = [1, 2, 3, ['a', 'b', 'c']];
+      const obj = {
+        id: 123456,
+        name: '애플토마토',
+        expired: Date.now() + (1000 * 60),
+        options: ['red', 'green', 'blue'],
+        maker: {
+          id: 'honggd'
+        }
+      };
+      console.log(arr, obj);
+      const arrJsonStr = JSON.stringify(arr);
+      const objJsonStr = JSON.stringify(obj);
+      console.log(typeof arrJsonStr, arrJsonStr);
+      console.log(typeof objJsonStr, objJsonStr);
+
+      // 저장
+      localStorage.setItem('arr', arrJsonStr);
+      localStorage.setItem('obj', objJsonStr);
+
+      // 가져와서 js로 변환하기
+      const arr2 = JSON.parse(localStorage.getItem("arr"));
+      console.log(typeof arr2, arr2);
+      const obj2 = JSON.parse(localStorage.getItem("obj"));
+      console.log(typeof obj2, obj2);
+    };
+  </script>
+
+  <h2>방명록</h2>
+  <form action="javascript:saveGuestbook();" name="guestbookFrm">
+    <table>
+      <tr>
+        <th><label for="username">이름</label></th>
+        <td><input type="text" id="username"></td>
+      </tr>
+      <tr>
+        <th><label for="content">내용</label></th>
+        <td><input type="text" id="content"></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: center;">
+          <button>저장</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+  <table id="tb-guestbook">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>이름</th>
+        <th>내용</th>
+        <th>일시</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+    class Guestbook {
+      constructor(username, content, datetime = Date.now()) {
+        this.username = username;
+        this.content = content;
+        this.datetime = datetime;
+      }
+    }
+
+    /**
+     * 유효성 검사
+     */
+    document.guestbookFrm.onsubmit = () => {
+      if (!username.value || !content.value) {
+        alert("이름과 내용을 입력해 주세요.")
+        return false;
+      }
+    };
+
+    /**
+     * 방명록 저장
+     * - 사용자 입력값 -> guestbook객체 -> 배열에 저장 -> json -> localstorage 저장
+     */
+    const saveGuestbook = () => {
+      // 사용자 입력값 처리
+      const usernameVal = username.value;
+      const contentVal = content.value;
+
+      // guestbook 객체
+      const guestbook = new Guestbook(usernameVal, contentVal);
+      console.log(guestbook);
+
+      // 배열에 저장
+      const guestbooks = JSON.parse(localStorage.getItem("guestbooks")) || [];
+      guestbooks.push(guestbook);
+      console.log(guestbooks);
+
+      // JSON
+      const data = JSON.stringify(guestbooks);
+      console.log(data);
+
+      // localStorage에 저장
+      localStorage.setItem('guestbooks', data);
+
+      // 초기화
+      document.guestbookFrm.reset();
+
+      // 렌더링
+      renderGuestbook(guestbooks);
+    };
+
+    const renderGuestbook = (guestbooks = JSON.parse(localStorage.getItem("guestbooks"))) => {
+      if (!guestbooks) return;
+      const tbody = document.querySelector("#tb-guestbook tbody");
+      tbody.innerHTML = "";
+      guestbooks.map((guestbook, index) => {
+        const { username, content, datetime } = guestbook;
+        return `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${username}</td>
+          <td>${content}</td>
+          <td>${datetimeFormatter(datetime)}</td>
+          </tr>
+          `;
+      }).forEach((tr) => {
+        tbody.innerHTML += tr;
+      });
+    };
+
+    const datetimeFormatter = (millis) => {
+      const d = new Date(millis);
+      const f = (n) => n < 10 ? '0' + n : n;
+      const yyyy = d.getFullYear();
+      const mm = f(d.getMonth() + 1);
+      const dd = f(d.getDate());
+      const hh = f(d.getHours());
+      const mi = f(d.getMinutes());
+      return `${yyyy}/${mm}/${dd} ${hh}:${mi}`;
+    };
+
+  </script>
+</body>
+
+</html>

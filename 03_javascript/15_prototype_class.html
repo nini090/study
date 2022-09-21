@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상속 - prototype</title>
+</head>
+
+<body>
+  <h1>상속 - prototype</h1>
+  <button onclick="test1();">상속</button>
+  <script>
+    /**
+    * 상속
+    */
+    const test1 = () => {
+      const books = [
+        new Novel('매트릭스', 35000, .15, '연애'),
+        new Novel('오라클', 30000, .2, '심리'),
+        new Novel('네오클래식', 15000, undefined, 'SF'),
+        new Comic('원피스', 3000, 0, false),
+        new Comic('드래곤볼', 2500, .1, true),
+      ];
+      console.log(books);
+      books.forEach((book) => console.log(`${book}`));
+    };
+
+    function Book(title, price, discountRate = 0.05) {
+      this.title = title;
+      this.price = price;
+      this.discountRate = discountRate;
+    }
+    Book.prototype.getSalePrice = function () {
+      return this.price - (this.price * this.discountRate);
+    }
+    Book.prototype.toString = function(){
+      return `제목 : ${this.title}, 판매가 : ${this.getSalePrice()}원 (정가 : ${this.price}원)`;
+    };
+
+     /**
+      * Pseudoclassical상속선언
+      * 
+      * 자식 생성자 함수 & 프로토타입 처리
+      * 1. 자식생성자함수 안에서 부모 프로토타입 호출 (super())
+      * 2. 자식생성자함수의 프로토타입객체 부모프로토타입객체 복제본으로 지정
+      * 3. 2번에서 생성된 프로토타입객체의 constructor속성으로 자식생성자함수를 지정
+      */ 
+    function Novel(title, price, discountRate, type) {  
+      // 1. 부모생성자 함수 호출
+      Book.call(this, title, price, discountRate);
+      // Book.apply(this, [title, price, discountRate]);
+
+      // 부모생성자 함수에서 처리할 수 없는 속성 등록
+      this.type = type;
+    };
+
+    // 2. 자식생성자함수의 프로토타입객체 부모프로토타입객체 복제본으로 지정
+    Novel.prototype = Object.create(Book.prototype);
+
+    // 3. 2번에서 생성된 프로토타입객체의 constructor속성으로 자식생성자함수를 지정
+    Novel.prototype.constructor = Novel;
+//  ---
+    function Comic(title, price, discountRate, finished) {
+      Book.call(this, title, price, discountRate);
+      this.finished = finished;
+    };
+    Comic.prototype = Object.create(Book.prototype); // new 생성자 함수 호출 없이 Book객체 생성
+    Comic.prototype.constructor = Comic;
+    Comic.prototype.toString = function() {
+      return `[${this.finished ? '완결' : '연재중'}] ${Book.prototype.toString.call(this)}`;
+    }
+  </script>
+  <button onclick="test2();">call | apply | bind</button>
+  <button onclick="test3();">Object.create</button>
+  <script>
+    /**
+     * this binding과 관련한 함수
+     * 
+     * this를 binding해서 호출
+     * - call(this객체, arg1, arg2, ...) - 함수의 매개인자를 나열
+     * - apply(this객체, [arg1, arg2, ...]) - 함수의 매개인자를 배열로 전달
+     * 
+     * this가 binding된 함수리턴
+     * - bind(this객체)
+     */
+    const test2 = () => {
+      const foo = function(a,b){
+        console.log(this, this.id,a,b);
+      };  
+      foo(10, 20); // window undefined 10 20
+
+      const obj = {
+        id : 'qwerty1234'
+      };
+      foo.call(obj,10,20); // {id: 'qwerty1234'} 'qwerty1234' 10 20
+      foo.apply(obj,[10,20]); // {id: 'qwerty1234'} 'qwerty1234' 10 20
+
+      const fooooooooo = foo.bind(obj);
+      fooooooooo(10, 20); // {id: 'qwerty1234'} 'qwerty1234' 10 20
+    };
+
+    /**
+     * Object.create
+     * - 생성자 호출 없이 해당객체를 생성하는 메소드(Object생성자 함수의 static메소드)
+     */
+    const test3 = () => {
+      // 1. new Room객체 - Room.prototype의 자식객체 생성. 생성자함수 호출(속성추가)
+      const room1 = new Room(1);
+      console.log(room1);
+
+      // 2. Object.create(Room.prototype) - Room.prototype의 자식객체 생성. 생성자함수 호출x (속성추가x)
+      const room2 = Object.create(Room.prototype);
+      console.log(room2);
+
+      console.log(room1.__proto__ === Room.prototype); // true
+      console.log(room2.__proto__ === Room.prototype); // true
+    };
+
+    function Room(no){
+      this.no = no;
+    }
+  </script>
+
+  <button onclick="test4();">class 기본</button>
+  <button onclick="test5();">class 상속</button>
+  <script>
+    /**
+     * class
+     * - 생성자 함수와 상속관계를 문법적으로 쉽게 표현
+     * - 생성자 함수의 Syntatic Sugar(문법적 달콤이)
+     * 
+     * - class는 동일한 이름의 생성자 함수를 선언한다.
+     * - new 연산자를 통해 생성자함수를 호출하면 constructor가 호출된다.
+     * - class내에 선언된 메소드(메소드단축분법)는 prototype에 작성이 된다.
+     * - calss내에 선언한 속성은 현재객체의 속성이 된다.
+     * - static키워드를 사용하면 생성자 함수의 속성으로 등록할 수 있다.
+     */
+    const test4 = () => { 
+      const honggd = new Person('홍길동', '01023232312');
+      console.log(honggd);
+
+      console.log(typeof Person, Person); // function 생성자함수
+      honggd.sayHi();
+
+      console.log(Person.y); // static 속성
+      Person.z();
+    };
+
+    const test5 = () => {
+      const sinsa = new Dev('신사임당', '01023456454', 'Javascript');
+      console.log(sinsa);
+
+      sinsa.sayHi();
+    };
+
+    class Person{
+      constructor(name, phone){
+        this.name = name;
+        this.phone = phone;
+      }
+      // 현재객체 속성지정
+      x=10;
+
+      // 생성자 함수 속성 지정
+      static y = 20;
+      static z(){
+        console.log('zzzzzzzzzzzzzzzzz');
+      }
+      // prototype 속성 - 메소드단축문법
+      sayHi(){
+        console.log(`안녕하세요, 저는 ${this.name}입니다`);
+      } 
+    }
+
+    class Dev extends Person{
+      constructor(name, phone, lang){
+        super(name, phone);
+        this.lang = lang;
+      }
+      // Dev.prototype
+      sayHi(){
+        super.sayHi(); // 프로토타입체인 상의 부모 메소드
+        console.log(`저는${this.lang}개발자입니다.`);
+      }
+    }
+  </script>
+</body>
+
+</html>

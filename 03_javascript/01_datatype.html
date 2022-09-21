@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자료형</title>
+</head>
+
+<body>
+  <h1>자료형</h1>
+  <button onclick="test1();">Dynamic Typing</button>
+  <button onclick="test2();">자료형</button>
+  <script>
+    /**
+     * 변수 선언 시 let 키워드 사용
+     * 상수 선언 시 const 키워드 사용
+     * 
+     * Dynamic Typing - javascript에서는 대입된 값에 따라 변수의 자료형이 결정된다
+     * 
+    */
+    function test1() {
+      let k; // 변수 선언
+      k = 123; // 값 대입
+      console.log(typeof k, k); // number 123
+      k = "안녕";
+      console.log(typeof k, k); // string 안녕
+    }
+    /**
+     * 자료형
+     * - string
+     * - number
+     * - boolean
+     * - object
+     * - function
+     * - undefined
+     */
+    function test2() {
+      // string
+      // const s; // 'const' declarations must be initialized.
+      // s = 'heyhey';
+      const s = 'HelloWorld'; //홑따옴표 또는 쌍따옴표
+      // s = 'Bye'; // Assignment to constant variable.
+      console.log(typeof s, s);
+
+      // number
+      // 정수/실수 구분하지 않는다
+      const a = 10.120;
+      console.log(typeof a, a);
+      console.log(10 / 3); // 3.3333333333333335
+
+      // boolean
+      // true, false
+      const bool = !false;
+      console.log(typeof bool, bool);
+
+      // object
+      const today = new Date(); // 생성자 함수 호출 객체 생성
+      console.log(typeof today, today);
+
+      const arr = [1, 2, 3] // 배열 -> 객체
+      console.log(typeof arr, arr);
+      console.log(arr[0], arr[1], arr[2]);
+
+      // 요소(속성명:속성값) - 리터럴로 객체생성
+      const obj = {
+        name: '홍길동',
+        n: 123.456,
+        married: false,
+        favoriteNums: [9, 12, 23],
+        friend: {
+          name: '고길동'
+        }
+      };
+      console.log(typeof obj, obj);
+      console.log(obj.name);
+      console.log(obj.n);
+      console.log(obj.married);
+      console.log(obj.favoriteNums);
+      console.log(obj.friend);
+
+      // function
+      function foo() {
+        console.log('fooooooooooooooooooooooooooooo!')
+      }
+      console.log(typeof foo, foo);
+      foo();
+
+      // undefined
+      let k;
+      console.log(typeof k, k); // undefined undefined
+      let m = '안녕하세요';
+      m = undefined;
+      console.log(typeof m, m); // undefined undefined
+    }
+  </script>
+</body>
+
+</html>

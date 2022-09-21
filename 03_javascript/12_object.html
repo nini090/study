@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체</title>
+</head>
+<body>
+    <h1>객체</h1>
+    <button onclick="test1();">객체생성</button>
+    <button onclick="test2();">메소드</button>
+    <button onclick="test3();">Object API</button>
+    <button onclick="test4();">계산기객체</button>
+    <button onclick="test5();">단축속성문법</button>
+    <script>
+        /**
+         * 객체생성
+         * 1. {}
+         * 2. new Object()
+         */
+        const test1 = () => {
+            const obj1 = {
+                id : 'honggd',
+                name :'홍길동',
+                age : '33',
+                marride : true,
+                hobby : ['축구', '야구', '농구'],
+                pet : {
+                    name : '구리구리',
+                    breed : '푸들',
+                    age : 5
+                },
+                'phone number' : '01068556938', 
+                'ss-number' : '950909-1551819', 
+                123 : 456
+            }; // 리터럴
+            const obj2 = new Object();
+            obj2.name = '세종대왕';
+            console.log(obj1);
+            console.log(obj2);
+
+            // 속성 참조
+            // 1. dot notation
+            
+            // console.log(obj1.id);
+            // console.log(obj1.name);
+            // console.log(obj1.age);
+            // console.log(obj1.marride);
+            // console.log(obj1.hobby[0], obj1.hobby[1]);
+            // console.log(obj1.pet.name, obj1.pet.breed, obj1.pet.age);
+            // console.log(obj1.123, obj1.phone number, obj1.ss-number); // dot-notation으로 참조 불가
+
+            // 2. bracket notation
+
+            console.log(obj1['id']);
+            console.log(obj1['name']);
+            console.log(obj1['age']);
+            console.log(obj1['marride']);
+            console.log(obj1['hobby'][0], obj1['hobby'][1]);
+            console.log(obj1['pet']['name'], obj1['pet']['breed']);
+            console.log(obj1['123'], obj1['phone number'], obj1['ss-number']);
+            console.log(obj1.car); // undefined
+            // console.log(obj1.car.name); // 오류
+
+            // 동적으로 속성추가
+            obj1.friend = {
+                name : '신사임당'
+            };
+
+            // 속성 제거
+            obj1.age = undefined; // 값만 제거
+            delete obj1.age; // 속성 제거
+        };
+        /**
+         * 객체의 속성타입이 함수일 때, 이를 메소드라 한다.
+         */
+        const test2 = () => {
+            const pet = {
+                petname : '복실이',
+                // this용법5. 메소드(일반함수) 안에서 this는 현재객체이다.
+                run : function(){
+                    console.log(this); // 현재객체 pet
+                    console.log(`${this.petname}가 달린다!`);
+                },
+                // 메소드 작성 시에는 화살표함수를 지양한다.
+                jump : () => {
+                    // this - window
+                    console.log(`${this.petname}가 점프한다!`); // window.petname
+                },
+                bark() {
+                    // 메소드 단축문법
+                    console.log(`${this.petname}가 짖는다!`);
+                },
+                eat(food) {
+                    console.log(`${this.petname}가 ${food}을 먹는다!`);
+
+                }
+            };
+            console.log(typeof pet.run, pet.run);
+            // console.log(typeof pet['run'], pet['run']);
+            pet.run();
+            // pet['run']();
+            pet.jump();
+            pet.bark();
+            pet.eat('개껌');
+
+            pet.walk = (() => {
+                console.log(`${this.petname}가 걷는다!`);
+
+            }).bind(pet);
+            pet.walk();
+        };
+        /**
+         * Object API
+         */
+        const test3 = () => {
+            const obj = {
+                name : '아이폰',
+                price : 1_000_000,
+                color : ['red', 'black', 'white']
+            }
+            // 객체속성 순회
+            // for..in
+            for(const name in obj) {
+                console.log(name, obj[name]);
+            }
+
+            // Object.keys():[]
+            const keys = Object.keys(obj);
+            console.log(keys);
+            keys.forEach((key) => {
+                console.log(key, obj[key]);
+            });
+
+            //Object.values():[]
+            const values = Object.values(obj);
+            console.log(values);
+        }
+        const test4 = () => {
+        const calculator = {
+        add(...nums) {
+        return nums.reduce((agg, num) => agg + num);
+        },
+        subtract(...nums){
+        return nums.reduce((agg, num) => agg - num);
+        },
+        multiply(...nums){
+        return nums.reduce((agg, num) => agg * num);
+        },
+        divide(...nums){
+        return nums.reduce((agg, num) => Math.floor(agg / num));
+        }
+        };
+    
+    console.log(calc(calculator.add, 10, 20)); // 30
+    console.log(calc(calculator.add, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) // 55
+    console.log(calc(calculator.subtract, 100, 70)); // 30
+    console.log(calc(calculator.multiply, 11, 2, 5)); // 110
+    console.log(calc(calculator.multiply, 9, 5)); // 45
+    console.log(calc(calculator.divide, 100, 3)); // 33
+  };
+
+  // const calc = (f, ...nums) => { // 나머지 파라미터
+  //   return f(...nums); // 전개연산자
+  // };
+  const calc = (f, ...nums) => f(...nums);
+
+  /**
+   * 단축속성문법 ES6
+   * - 속성명 : 속성값
+   * - 속성으로 변수를 전달하면, 자동으로 변수명: 값으로 처리된다.
+   */
+  const test5 = () => {
+      const name = '홍길동';
+      const lang = 'Javascript';
+
+    //   const dev = {
+    //       name : name,
+    //       lang : lang
+    //   };
+    const dev = {name, lang,
+        career : 10
+    };
+      console.log(dev);
+  };
+    </script>
+    
+</body>
+</html>

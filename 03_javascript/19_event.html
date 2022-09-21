@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event</title>
+  <script>
+    /**
+     * 문서가 모두 로딩되었을 때 window의 load이벤트 발생!
+     * - window.onload와 body.onload는 동일하다.
+     */
+    window.onload = () => {
+      const h2 = document.createElement("h2");
+      h2.append(document.createTextNode("Hello Friday~"));
+      target.append(h2); // 19_event.html:12 Uncaught ReferenceError: target is not defined
+    };
+
+    window.addEventListener("load", () => {
+      console.log("문서 로드 완료! - 1");
+    });
+    window.addEventListener("load", () => {
+      console.log("문서 로드 완료! - 2");
+    });
+  </script>
+</head>
+
+<body onload="console.log('Page Loading Complete!')">
+  <h1>event</h1>
+  <a href="https://www.w3schools.com/tags/ref_eventattributes.asp">HTML Event Attributes</a>
+  <!-- 
+    event 
+    - 웹페이지 상에 일어나는 모든 사용자 action, 네트워크상 처리상태변화 등 하나의 이벤트로 관리된다.
+    - event -> eventHandler : 이벤트가 발생하면, 태그에 등록된 핸들러를 호출
+    - 태그객체별로 event별 Handler(listener)를 등록해서 사용한다.
+  -->
+  <h2>hadler binding</h2>
+  <button id="btn1" onclick="test1();">클릭미 #btn1</button>
+  <button id="btn2">클릭미 #btn2</button>
+  <button id="btn3">클릭미 #btn3</button>
+  <script>
+    /**
+     * handler binding 1
+     * - inline 이벤트속성에 작성한 내용이 핸들러함수의 몸통에 전달된다.
+     */
+    const test1 = () => {
+      console.log(btn1.onclick); // ƒ onclick(event) {test1();}
+    };
+
+    /**
+     * handler binding 2
+     * - 태그객체의 이벤트속성에 핸들러를 직접 지정
+     * - 하나의 핸들러만 등록가능
+     */
+    btn2.onclick = () => {
+      // console.log(btn2.onclick); // () => {console.log(btn2.onclick);}
+      console.log('#btn3 clicked! - 1');
+    };
+    btn2.onclick = () => {
+      // console.log(btn2.onclick); // () => {console.log(btn2.onclick);}
+      console.log('#btn3 clicked! - 2');
+      btn2.onclick = null; // 등록된 함수 제거
+    };
+    btn2.onclick = test1; // test1 리턴값을 onclick 속성값 대입
+
+    /**
+     * handler binding 3
+     * - addEventListener(이벤트명, 핸들러)
+     * - 복수개의 핸들러를 등록 가능
+     */
+
+    const foo1 = () => console.log('#btn3 clicked! - 1');
+    const foo2 = () => {
+      console.log('#btn3 clicked! - 2')
+      btn3.removeEventListener('click', foo2); // 삭제할 핸들러 명시
+    };
+    btn3.addEventListener('click', foo1);
+    btn3.addEventListener('click', foo2);
+  </script>
+<div id="target"></div>
+
+  <button id="btn4">@실습문제 - 이미지 로딩</button>
+  <!-- #btn4를 클릭하면, 동적으로 img태그를 생성해서 #target에 자식요소로 추가.
+      추가가 완료되면(load) "이미지 로딩이 완료되었습니다." 메세지를 alert하세요.
+  -->
+  <script>
+    btn4.addEventListener('click', () => {
+      const img = document.createElement("img");
+      img.src = "../sample/image/hyunta.jpg";
+      img.style = "width:100px; border-radius:50%";
+      img.onload = () => alert("이미지 로딩이 완료되었습니다!");
+      target.innerHTML=""; // 자식요소 모두 제거
+      target.append(img);
+    });
+  </script>
+
+  <button id="btn5" onmouseover="bar(event);">이벤트객체 | 이벤트발생객체</button>
+  <script>
+    /**
+     * 이벤트객체 - 이벤트관련정보를 가진 객체. 핸들러의 매개인자로 전달이 된다.
+     * 이벤트 발생객체 - 이벤트객체의 target속성. 이벤트핸들러 안의 this속성
+     * 
+     * this용법7. 이벤트핸들러 안의 this는 이벤트발생객체를 가리킨다. (일반함수, 화살표x)
+     */
+    btn5.addEventListener('click', function(e){
+      console.log(e);
+      console.log(e.target); // #btn5
+      console.log(this);
+      console.log(e.target === this); // true
+      console.log(e.target.innerHTML, this.innerHTML);
+
+    });
+    
+    const bar = (e) => {
+      console.log(e);
+    };
+  </script>
+
+  <fieldset>
+    <legend>Key Event | FocusEvent</legend>
+      <input type="text" id="message">
+      <span id="message-display"></span>
+  
+  </fieldset>
+  <script>
+    /**
+     * keydown
+     * keypress : 기능키/한글일 때 발생하지 않는다.
+     * keyup
+     * 
+     * - key : 문자
+     * - code : KeyEvent에서 정한 키워드
+     * - keycode : ascii code 대소문자구분하지 않음
+     */
+    message.addEventListener('keydown', (e) => {
+      // console.log("keydown");
+    });
+    message.addEventListener('keypress', (e) => {
+      // console.log("keypress");
+    });
+    message.addEventListener('keyup', (e) => {
+      console.log("keyup");
+      console.log(e);
+      if(e.keyCode === 13){
+      // if(e.keyCode == Enter) {
+        alert(e.target.value);
+        e.target.value="";
+      };
+      document.querySelector("#message-display").innerHTML = e.target.value;
+    });
+
+    message.addEventListener('focus', (e) => {
+      console.log(e); // FocusEvent
+      e.target.style.backgroundColor = "blue";
+      e.target.style.color = "white";
+    });
+    message.addEventListener('blur', (e) => {
+      console.log(e); // FocusEvent
+      e.target.style.backgroundColor = "";
+      e.target.style.color = "";
+    });
+  </script>
+
+  <form action="javascript:signup();" name="signupFrm">
+    <fieldset>
+      <legend>회원가입</legend>
+      <label for="userId">아이디(이메일) : </label>
+      <input type="email" name="userId" id="userId">
+      <br>
+      <label for="password">비밀번호 :</label>
+      <input type="password" name="password" id="password">
+      <br>
+      <label for="passwordCheck">비밀번호 확인 : </label>
+      <input type="password" id="passwordCheck">
+      <br>
+      <input type="submit" value="회원가입">
+    </fieldset>
+  </form>
+  <script>
+    /**
+     * submit이벤트
+     * - 실제 submit되기 직전에 발생!
+     * - 입력값들에 대한 유효성검사
+     * 
+     * 폼제출방지
+     * - return false : 핸들러 즉시중지. addEventListner로 추가된 핸들러에서는 작동하지 않는다
+     * - e.preventDefault() : 이벤트기본작동만 중지, 함수는 마저 실행
+     */
+    document.signupFrm.onsubmit = (e) => {
+      alert("submit");
+      
+      // 비밀번호 유효성 검사
+      if(password.value.trim().length < 4){
+        alert("비밀번호는 4글자 이상이어야 합니다.");
+        password.select();
+        // e.preventDefault();
+        return false; // 진행중단
+      }
+
+      if(password.value !== passwordCheck.value){
+        alert("두 비밀번호가 일치하지 않습니다.");
+        password.focus();
+        e.preventDefault();
+      }
+
+    };
+
+    const signup = () => {
+      alert('회원가입 성공!');
+    };
+  </script>
+
+  <h2>Event Propagation</h2>
+  <!-- 이벤트 전파 -->
+  <div id="bubble1" class="bubble bubble1">
+    <div id="bubble2" class="bubble bubble2">
+      <div id="bubble3" class="bubble bubble3"></div>
+</div>
+</div>
+<style>
+  .bubble {border:1px solid black; padding: 20px;}
+  .bubble1 {background-color: aqua;}
+  .bubble2 {background-color: magenta;}
+  .bubble3 {background-color: khaki;}
+</style>
+<script>
+  /**
+   * 이벤트는 전파된다.
+   * bubbling - 자식요소에서 부모요소로 전파된다.(기본속성)
+   */
+  document.body.addEventListener('click', (e) => {
+    // console.log('body 클릭!', e.target);
+
+    switch(e.target) {
+      case bubble1 : console.log('#bubble1 클릭!', e.target); break; 
+      case bubble2 : console.log('#bubble2 클릭!', e.target); break;
+      case bubble3 : console.log('#bubble3 클릭!', e.target); break;
+    }
+  });
+  // document.querySelector("bubble1").addEventListener('click', (e) => {
+  //   console.log('#bubble1 클릭!', e.target);
+  // });
+  // document.querySelector("bubble1").addEventListener('click', (e) => {
+  //   console.log('#bubble2 클릭!', e.target);
+  // });
+  // document.querySelector("bubble1").addEventListener('click', (e) => {
+  //   console.log('#bubble3 클릭!', e.target);
+  // });
+</script>
+
+<h2>Trigger Event</h2>
+<h3 id="counter"></h3>
+<button id="btn-trigger-counter">클릭</button>
+<script>
+  let num = 0;
+  counter.innerHTML = num;
+  counter.addEventListener('click', () => {
+    num++;
+    counter.innerHTML = num;
+  })
+
+  document.querySelector("#btn-trigger-counter").addEventListener('click', () => {
+    const event = new MouseEvent('click');
+    counter.dispatchEvent(event); // #counter에 click이벤트 발생 효과 -> click핸들러 실행
+  })
+</script>
+</body>
+
+</html>

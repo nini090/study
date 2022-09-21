@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>객체배열</title>
+</head>
+
+<body>
+  <h1>객체배열</h1>
+  <button onclick="test1();">객체배열 - 리터럴</button>
+  <button onclick="test2();">객체배열 - 생성자함수</button>
+  <button onclick="test3();">생성자함수 - prototype</button>
+  <button onclick="test4();">속성비교</button>
+  <script>
+    /**
+     * 객체배열 - 리터럴
+     */
+    const test1 = () => {
+      const pets = [];
+      pets.push({
+        name: '구리구리',
+        breed: '푸들',
+        weight: 3,
+        age: 10,
+        color: ['white'],
+        bark() {
+          return this.weight < 10 ? '왈왈' : '멍멍'
+        }
+      });
+      pets.push({
+        name: '둘리',
+        breed: '말티즈',
+        weight: 6,
+        age: 5,
+        color: ['white'],
+        bark() {
+          return this.weight < 10 ? '왈왈' : '멍멍'
+        }
+      });
+      pets.push({
+        name: '사랑이',
+        breed: '코카스파니엘',
+        weight: 13,
+        age: 3,
+        color: ['white', 'brown'],
+        bark() {
+          return this.weight < 10 ? '왈왈' : '멍멍'
+        }
+      });
+
+      // 반복처리 : 
+      // 구리구리야~ 왈왈
+      // 둘리야~ 왈왈
+      // 사랑이야~ 멍멍
+      pets.forEach((pet) => {
+        // console.log(`${pet.name}야~ ${pet.bark()}`);
+        const { name, bark } = pet;
+        // method 구조분해할당하면 this를 잃어버린다.
+        console.log(`${name}야~ ${bark()}`); // this를 pet으로 binding해서 bark호출
+      });
+
+    };
+    /**
+     * 객체배열 - 생성자함수
+     */
+    const test2 = () => {
+      const pets = [];
+      pets.push(new Pet('구리구리', '푸들', 3, 10, 'white'));
+      pets.push(new Pet('둘리', '말티즈', 6, 5, 'white'));
+      pets.push(new Pet('사랑이', '코카스파니엘', 13, 3, 'white', 'brown'));
+      console.log(pets);
+
+      pets.forEach((pet) => {
+        console.log(`${pet.name}야~ ${pet.bark()}`); 
+      });
+
+    };
+
+    /**
+     * 생성자함수
+     * - 관례상 대문자로 시작하는 이름을 갖는다.
+     * - new 연산자를 통해 호출되고, 객체를 생성한다.
+     * - this용법6. 생성자함수 안의 this는 현재객채를 가리킨다.
+     * - 화살표함수는 생성자함수로 사용할 수 없다.
+     */
+    function Pet(name, breed, weight, age, ...color) {
+      this.name = name;
+      this.breed = breed;
+      this.weight = weight;
+      this.age = age;
+      this.color = color;
+      // 객체에 직접 작성
+      // this.bark = function () {
+      //   return this.weight < 10 ? '왈왈' : '멍멍';
+      // }
+    };
+    // Pet.prototype : 펫객체(new Pet())의 부모객체
+    Pet.prototype.bark = function(){
+      return this.weight < 10 ? '왈왈' : '멍멍';
+    };
+    /**
+     * 생성자함수 - prototype
+     * - javascript는 프로토타입기반의 상속모델을 가진 객체지향언어
+     * - 생성자함수 호출로 생성된 객체는 프로토타입과 연결된 프로토타입체인을 갖는다.
+     *   (프로토타입객체를 부모로 삼는다)
+     * - 프로토타입체인의 최상위에는 Object.prototype이 존재한다.
+     */
+    const test3 = () => {
+      console.log(Duck); // 생성자함수
+      console.log(Duck.prototype); // 프로토타입
+
+      console.log(Duck.prototype.constructor == Duck);
+
+      const lee = new Duck('이','오리'); // duck 객체
+      console.log(lee); 
+
+      lee.say(); // Duck.prototype.say 호출
+      console.log(lee.toString()); // [object Object]
+      console.log(`${lee}`); // [object Object]
+
+      console.log(lee.__proto__); // Duck.prototype
+      console.log(lee.__proto__ === Duck.prototype); // true
+
+      // 생성자함수는 new연산자와 함께 호출해야 한다.
+      const donald = Duck('Donald', 'Trump');
+      console.log(donald); // undefined
+      console.log(this.firstname); // Donald
+      console.log(this.lastname); // Trump
+    };
+
+    function Duck(firstname, lastname) {
+      this.firstname = firstname;
+      this.lastname = lastname;
+    };
+    Duck.prototype.say = function(){
+      console.log(`안녕하세요, ${this.firstname} ${this.lastname}입니다.`);
+    }
+
+    /**
+     * 속성비교
+     * - 생성자함수 속성
+     * - 프로토타입 속성
+     * - 생성객체 속성
+     */
+    const test4 = () => {
+      const a = new A();
+      console.log(a);
+
+      // 생성객체 속성
+      console.log(a.username);
+      a.hello();
+
+      // 생성자함수 속성 (static)
+      console.log(A.username);
+      A.hello();
+    };
+
+    /**
+     * 생성자함수
+     */
+    function A(){
+    //   this.username = '알 파치노';
+    //   this.hello = function(){
+    //     console.log('안녕 알 파치노');
+    //   };
+    };
+    /**
+     * 생성자함수 속성 (static)
+     */
+    A.username = '홍길동';
+    A.hello = function(){
+      console.log('안녕 홍길동');
+    };
+
+    /**
+     * 프로토타입 속성
+     */
+    A.prototype.username = '아이언맨';
+    A.prototype.hello = function(){
+      console.log('안녕 아이언맨');
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kk</title>
+</head>
+
+<body>
+  <script>
+    // const name = '김경룡';
+    // const age = 28;
+    // const message = 'I\'m a boy';
+    // const message2 = `My name is ${name}`;
+    // const message3 = `나는 ${20+8}살 입니다`;
+    // console.log(message2);
+    // console.log(message3);
+
+    // console.log(name == '김경룡');
+    // console.log(age > 40);
+    // undefined == 값이 할당되지 않음
+
+    // alert - 알려줌
+    // prompt - 입력받음
+    // confirm - 확인받음
+    // 단점 : 스크립트 일시정지, 스타일링 X
+
+    // const name1 = prompt("이름을 입력하시오.", "김경룡"); // prompt는 두 개의 인수를 받을 수 있음(메세지, 디폴트값)
+    // alert("환영합니다 " + name1 + "님!");
+    // alert(`환영합니다 ${name1}님!`);
+
+    // const isAdult = confirm("당신은 성인입니까?") // 결제 확인 등
+    // console.log(isAdult); // 확인 - true, 취소 - false
+
+    // const mathScore = Number(prompt("수학 점수 : "));
+    // const engScore = Number(prompt("영어 점수 : "));
+    // const result = (mathScore + engScore) / 2;
+    // console.log(`평균 점수는 ${result} 입니다.`);
+
+    // 연산자 줄여서 쓰기
+    // let num = 5;
+    // num = num + 5; // == num += 5
+    // num += 5;
+    // console.log(num);
+
+    // 명확한 횟수가 정해져 있으면 for 아니면 while
+
+    // function showError() {
+    //   alert('에러 발생! 다시 실행 하시오.');
+    // }
+
+    // showError(); // 여러군데 사용, 유지보수 용이
+
+    // function sayHello(name = '김경룡') {
+    //   let msg = "Hello";
+    //   if(name) {
+    //     msg += `, ${name}`;
+    //   }
+    //   console.log(msg);
+    // }
+    // sayHello();
+    // sayHello('L');
+
+    // function add(num1, num2) {
+    //   return num1 + num2;
+    // }
+
+    // const result = add(2, 5);
+    // console.log(result);
+
+    // let add = function(num1, num2) {
+    //   return num1 + num2;
+    // }
+
+    // let add2 = (num1, num2) => (
+    //   num1 + num2
+    // );
+
+    // 함수 표현식 - 호출이 나중에 와야함
+    // showError();
+
+    // let showError = function () {
+    //   console.log('error');
+    // }
+
+    // 함수 선언문 - 어디서든 호출 가능(호이스팅)
+    // showError();
+
+    // function showError() {
+    //   console.log('error');
+    // }
+
+    // 화살표 함수
+
+    // let showError = () => {
+    //   console.log('error');
+    // }
+
+
+    // const add = function(num1, num2) {
+    //   const result = num1 + num2;
+    //   return result;
+    // };
+
+    // const add = (num1, num2) => {
+    //   const result = num1 + num2;
+    //   return result;
+    // };
+
+    // const add = (num1, num2) => {
+    //   return num1 + num2;
+    // };
+
+    // const add = (num1, num2) => num1 + num2;
+
+    // 객체
+
+    // const superman = {
+    //   name : 'clark',
+    //   age : 30.
+    // }
+
+    // superman.hairColor = 'red';
+    // superman['hobby'] = 'football';
+    // delete superman.age;
+    // console.log(superman);
+    // console.log(superman.name);
+    // console.log(superman['age']);
+
+    // function makeObject(name, age) {
+    //   return {
+    //     name : name,
+    //     age : age,
+    //     hobby : 'football',
+    //   }
+    // }    
+    // function makeObject(name, age) {
+    //   return {
+    //     name,
+    //     age,
+    //     hobby: 'football',
+    //   }
+    // }
+
+    // const Kim = makeObject('Kim', 28);
+    // console.log(Kim);
+
+    // console.log('age' in Kim); // 존재여부 확인
+    // console.log('birthday' in Kim);
+
+    // function isAdult(user) {
+    //   if (user.age < 20 || !('age' in user)) {
+    //     alert('미성년자입니다.');
+    //     return false;
+    //   }
+    //   alert('성인입니다.')
+    //   return true;
+    // }
+
+    // const Kim = {
+    //   name : 'Kim',
+    //   age : 28,
+    // }
+
+    // const Lee = {
+    //   name : "Lee",
+    //   age : 15,
+    // }
+
+    // const Park = {
+      
+    // }
+    // console.log(isAdult(Kim));
+    // console.log(isAdult(Lee));
+    // console.log(isAdult(Park));
+
+    // 객체 for ... in
+
+    // const Kim = {
+    //   name : 'Kim',
+    //   age : 28,
+    // };
+
+    // for(x in Kim) {
+    //   console.log(x); // name, age
+    //   console.log(Kim[x]); // Kim, 28
+    // }
+
+    // method
+
+    // let boy = {
+    //   name : 'Kim',
+    //   showName : function() {
+    //     console.log(this.name);
+    //   }
+    // }
+
+    // boy.showName();
+
+    // let man = boy;
+    // man.name = 'Lee';
+
+    // console.log(boy.name);
+    // man.showName();
+    
+    // boy = null;
+
+    // man.showName();
+
+    // let boy = {
+    //   name : 'Kim',
+    //   sayThis : () => {
+    //     console.log(this.name);
+    //   }
+    // }
+
+    // boy.sayThis(); // 화살표 함수에선 this x
+
+    // 배열
+    // push() : 배열 끝에 추가
+    // pop() : 배열 끝 요소 제거
+    // shift(), unshift() : 배열 앞 제거, 추가
+
+    let days = ['mon', 'tue', 'wed'];
+
+    days[1] = '화';
+    days.push('thu');
+    days.pop();
+    days.unshift('금', '토', '일');
+    days.shift();
+
+    console.log(days);
+
+    for(let i = 0; i < days.length;i++) {
+      console.log(days[i]);
+    }
+
+    for(day of days) {
+      console.log(day);
+    }
+
+  </script>
+</body>
+
+</html>

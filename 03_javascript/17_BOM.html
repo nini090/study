@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOM</title>
+</head>
+
+<body>
+  <h1>BOM</h1>
+  <h2>navigator</h2>
+  <button onclick="test1();">navigator</button>
+  <script>
+    /**
+     * navigator
+     * - browser에 대한 정보를 가진 객체
+     * - userAgent
+     */
+    const test1 = () => {
+      console.log(navigator);
+      console.log(navigator.userAgent); 
+      // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36
+
+    };
+  </script>
+  <h2>location</h2>
+  <button onclick="test2();">location</button>
+  <button onclick="test3();">location.href</button>
+  <button onclick="test4();">location.reload</button>
+  <script>
+    /**
+     * location
+     * - 브라우져 주소표시줄 관련정보를 가진 객체
+     */
+    const test2 = () => {
+      console.log(location);
+      const {href, protocol, hostname, port, origin, pathname, search, hash} = location;
+      console.log(href, protocol, hostname, port, origin, pathname, search, hash);
+      // http://192.168.45.50:5500/03_javascript/17_BOM.html http: 192.168.45.50 5500 http://192.168.45.50:5500 /03_javascript/17_BOM.html  
+      //http:
+      //192.168.45.50:5500
+      // /03_javascript/17_BOM.html
+      //?type=abc&query=%EC%95%88%EB%85%95 
+      // #querty
+    };
+
+    // 페이지이동
+    const test3 = () => location.href = "http://naver.com"
+    // 새로고침
+    const test4 = () => location.reload();
+  </script>
+
+  <h2>history</h2>
+  <button onclick="test5();">history</button>
+  <button onclick="test6();">history.forward()<f/button>
+  <button onclick="test7();">history.back()</button>
+  <button onclick="test8();">history.go()</button>
+  
+  <script>
+    /**
+     * history
+     * - 브라우저 방문기록 관리객체
+     */
+    const test5 = () => { 
+      console.log(history);
+    };
+    const test6 = () => history.forward();
+    const test7 = () => history.back();
+    /**
+     * go(n)
+     * - 양수 : 제공된 숫자 만큼 앞으로 가기
+     * 0 : 새로고침
+     * 음수 : 제공된 숫자 만큼 뒤로 가기
+     */
+    const test8 = () => {
+      const n = prompt("이동할 페이지에 대해 정수로 입력");
+      history.go(n);
+    };
+  </script>
+  <h2>screen</h2>
+  <button onclick="test9();">screen</button>
+  <script>
+    /**
+     * screen
+     * - os에 연결된 모니터(hw) 관련 정보 가진 객체
+     */
+    const test9 = () => {
+      console.log(screen);
+      const {width, height, availWidth, availHeight, availLeft, availTop} = screen;
+      console.log(width, height, availWidth, availHeight, availLeft, availTop);
+      // 1920 
+      // 1080 
+      // 1920 
+      // 1080 
+      // 0 
+      // 0
+
+      // 300px * 300px 팝업창을 화면 정 가운데에 위치시키기
+      // left : (전체너비 - 창 너비) / 2
+      // top : (전체길이 - 창 길이) / 2
+      const left = availLeft + (width - 300) / 2;
+      const top = availTop + (height - 300) / 2;
+      open("", "popup", `width=${300}px, height=${300}px, left=${left}px, top=${top}px`);
+    };
+  </script>
+ 
+
+</body>
+
+</html>

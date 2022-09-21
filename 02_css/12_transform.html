@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transform</title>
+</head>
+<style>
+    body {
+        text-align: center;
+    }
+    .img-wrapper {
+        margin: 100px 0;
+    }
+    img {
+        width: 300px;
+    }
+    .translate:hover {
+        transform: translate(100px, 100px); /*x축offset, y축offset*/
+    }
+    .scale:hover {
+        transform: scale(1.5, 1.5); /*x축비율, y축비율*/
+    }
+    .rotate:hover {
+        transform: rotate(-315deg); /*양수 시계방향, 음수 반시계방향*/
+    }
+</style>
+<body>
+    <h1>transform</h1>
+    <div class="img-wrapper">
+    <img src="../sample/image/flower1.PNG" alt="" class="translate">
+    </div>
+    <div class="img-scale">
+    <img src="../sample/image/flower2.PNG" alt="" class="scale">
+    </div>
+    <div class="img-rotate">          
+    <img src="../sample/image/flower3.PNG" alt="" class="rotate">
+    </div>
+</body>
+</html>

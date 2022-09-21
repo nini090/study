@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async & awaitt</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
+    integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+      .pet-wrapper {
+        padding: 3px;
+        border: 1px solid black;
+        width: fit-content;
+        height: fit-content;
+        margin: 10px 0;
+        text-align: center;
+      }
+  
+      .pet-wrapper img {
+        width: 300px;
+        transition-duration: 1s;
+      }
+    </style>
+</head>
+
+<body>
+  <h1>async & await</h1>
+  <button id="btn1">async</button>
+  <button id="btn2">await</button>
+  <button id="btn3">await loadScript</button>
+  <script>
+    /**
+      * async 
+      * - ES2017에 추가된 일반함수의 Promise화를 지원하는 문법
+      * 
+      * await
+      * - async함수 안에서만 사용이 가능
+      * - Promise의 동기적 처리를 지원.
+      */
+    btn1.addEventListener('click', () => {
+      zoo()
+        .then((value) => console.log(value));
+    });
+
+    // const zoo = () => 10; // 오류
+    // const zoo = () => new Promise((resolve) => resolve(10)); // 10
+    // const zoo = () => Promise.resolve(10); // 10
+    const zoo = async () => 10; // 10;
+
+    btn2.addEventListener('click', async () => {
+      // Promise 일반적인 사용
+      // xoo()
+      //   .then((value) => console.log(value));
+
+
+      const value = await xoo();
+      console.log(value)
+    });
+
+    const xoo = () => new Promise((resolve) => {
+      setTimeout(() => resolve(100), 3000);
+    });
+
+    btn3.addEventListener('click', async () => {
+      // loadScript('js/1.js')
+      //   .then(() => loadScript(bar()))
+      //   .then(() => loadScript(car()))
+      //   .then(() => dar());
+      await loadScript('js/1.js'); // resolve 되기 전까지 기다린다. (동기적)
+      let path = bar();
+      await loadScript(path);
+      path = car();
+      await loadScript(path);
+      dar();
+    });
+
+    const loadScript = (path) => new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = path;
+      script.onload = () => {
+        console.log(`${path}로드완료!`);
+        resolve();
+      };
+      document.head.append(script);
+    });
+  </script>
+
+
+  <button id="btn4">await fetch</button>
+  <script>
+    const USER_URL = "https://asia-northeast3-focal-elf-326215.cloudfunctions.net/user";  // goolgle cloud function
+    const GITHUB_URL = "https://api.github.com/users/";
+    btn4.addEventListener('click', async () => {
+      const resp = await axios(USER_URL);
+      console.log(resp);
+      const { data: { id } } = resp;
+
+      const { data: { avatar_url } } = await axios(GITHUB_URL + id)
+      console.log(avatar_url);
+
+      const img = await loadImg(avatar_url);
+      setTimeout(() => img.remove(), 3000);
+    });
+
+    const loadImg = (url) => new Promise((resolve) => {
+      const img = document.createElement("img");
+      img.src = url;
+      img.onload = () => resolve(img);
+      document.body.append(img);
+    })
+  </script>
+
+  <hr>
+
+  <button id="btn5">Random Dog</button>
+  <div class="dogs pet-wrapper"></div>
+  <script>
+    btn5.onclick = async () => {
+      const {data} = await axios("https://dog.ceo/api/breeds/image/random");
+      const img = await loadDogImage(data);
+      img.remove();
+      console.log('dog 이미지 제거완료!');
+    };
+
+    const loadDogImage = (data) => {
+      return new Promise((resolve) => {
+        const { message, status } = data;
+        if (status === 'success') {
+          const img = document.createElement("img");
+          img.src = message;
+          img.onload = () => {
+            console.log('dog 이미지 로드완료!');
+            setTimeout(() => {
+              resolve(img);
+            }, 3000);
+          };
+          const wrapper = document.querySelector(".dogs");
+          wrapper.innerHTML = ""; // 초기화
+          wrapper.append(img);
+        }
+      });
+    }
+  </script>
+
+  <button id="btn6">Random Cat</button>
+  <div class="cats pet-wrapper"></div>
+  <script>
+    btn6.onclick = async () => {
+      axios.defaults.headers.common['x-api-key'] = "ce06cd99-5426-4bb1-a41e-258c10e11682";
+      const {data} = await axios('https://api.thecatapi.com/v1/images/search', { params: { limit: 1, size: "full" } })
+      const img = await loadCatImg(data);
+      await new Promise((resolve) => {
+            img.ontransitionend = () => {
+              console.log('transition이 종료되었습니다.');
+              resolve(img);
+            };
+            setTimeout(() => {
+              img.style.opacity = 0;
+            }, 3000);
+          });
+          img.remove();
+    };
+
+    const loadCatImg = (data) => {
+      return new Promise((resolve) => {
+        const [{ url }] = data;
+        console.log(data, url);
+        const img = document.createElement("img");
+        img.src = url;
+        img.onload = () => resolve(img);
+        const wrapper = document.querySelector(".cats");
+        wrapper.innerHTML = "";
+        wrapper.append(img);
+
+      })
+    };
+    
+    </script>
+</body>
+
+</html>

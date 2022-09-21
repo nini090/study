@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String | Math | Date</title>
+</head>
+<body>
+    <h1>String</h1>
+    <button onclick="test1();">확인</button>
+    <button onclick="test2();">>@실습문제 - 알파벳갯수 세기</button>
+    <script>
+        /**
+         * String API
+         * - string타입의 값(객체)은 상속받은 string prototype객체의 메소드를 사용할 수 있다
+         */
+        function test1() {
+            const str = "Apple Samsung PineApple";
+
+            console.log(str.toUpperCase()); // APPLE SAMSUNG PINEAPPLE
+            console.log(str.toLowerCase()); // apple samsung pineapple
+
+            console.log(str.indexOf('Sam')); // 6
+            console.log(str.indexOf('SSSSSSSSSSS')); // -1
+
+            console.log(str.charAt(6)); // S
+            console.log(str[6]); // S
+            console.log(str.charCodeAt(0)); // 65 ASKII code
+
+            // 문자열 잘라내기 1 substring(start, end) - start는 포함 end는 미포함
+            console.log(str.substring(6,9)); // Sam
+            console.log(str.substring(6)); // Samsung PineApple
+
+            // 문자열 잘라내기 2 substr(start, length) - start부터 length개
+            console.log(str.substr(6,3)); // Sam
+            console.log(str.substr(6)) // Samsung PineApple
+
+            console.log(str.replace('Apple', '사과')); // 사과 Samsung PineApple (처음 만난 문자열 만 교체)
+            console.log(str.replace(/Apple/g, '사과')); // 사과 Samsung Pine사과
+
+            // 채우기
+            console.log("13".padStart(5, "#")); /// ###13
+            console.log("13".padEnd(5, "#")); /// 13###
+        }
+        /**
+         * @실습문제 - 사용자로부터 임의의 문자열을 받고. 영문자의 개수를 세서 콘솔출력
+         * - 애플 apple 사과! -> 5
+         * - Hello 망고 world -> 10
+         */
+        function test2() {
+            const input = prompt("문자입력").toLowerCase();
+            console.log(input);
+            let cnt = 0;
+            for(let i = 0;i < input.length;i++) {
+                //javascript 문자열 크기비교 사전등재순비교이다
+                if(input[i] >= 'a' && input[i] <= 'z') {
+                    cnt++;
+                }
+            }
+            console.log(`입력하신 영문자는 ${cnt}개 입니다.`);
+        }
+    </script>
+    <h1>Math</h1>
+    <button onclick="test3();">확인</button>
+    <script>
+        /**
+         *  Math의 static메소드 api
+         * 
+         */
+        function test3() {
+            const num = 123.456;
+            console.log(Math.ceil(num)); // 124
+            console.log(Math.floor(num)); // 123
+            console.log(Math.trunc(num)); // 123
+
+            console.log(Math.round(num)); // 123
+            console.log(Math.round(num*10) / 10); // 123.5 
+            
+            // Math.floor(난수(0.0이상 1.0미만) * 경우의 수 + 시작 값) 버림 처리할 것
+            console.log(Math.trunc(Math.random()*100+1))
+
+        }
+    </script>
+    <h1>Date</h1>
+    <h2 id="clock">yyyy/MM/dd hh:mm:ss</h2>
+    <button onclick="test4();">확인</button>
+    <button onclick="test5();">특정시각 | 간격계산</button>
+    <script>
+        /**
+         * Date
+         * - 날짜, 시각정보를 관리하는 객체
+         * - Date prototype객체가 제공하는 메소드
+         */
+        function test4() {
+            const now = new Date();
+            console.log(now); // 브라우저를 통해 시스템의 현재 시각정보를 가져온다.
+
+            console.log(now.getFullYear()); // 2022
+            console.log(now.getMonth()+1); // (0 ~ 11) + 1
+            console.log(now.getDate()); // 17
+
+            console.log(now.getDay()); // 일요일(0) ~ 토요일(6)
+            const days = ['일', '월', '화', '수', '목', '금', '토'];
+            console.log(days[now.getDay()]); // 화
+
+            console.log(now.getHours()); // 20
+            console.log(now.getMinutes()); // 29
+            console.log(now.getSeconds()); // 30
+
+            console.log(now.getTime()); // 밀리초
+            console.log(Date.now()); // 밀리초
+        }
+
+        function ClockString() {
+            function f(n) {
+                return n < 10 ? "0" + n : n;
+            }
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const MM = f(now.getMonth() + 1);
+            const dd = f(now.getDate());
+            const hh = f(now.getHours());
+            const mm = f(now.getMinutes());
+            const ss = f(now.getSeconds());
+            return `${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss}`;
+        }
+        function displayClock() {
+            clock.innerHTML = ClockString();
+            // setTimeout(함수, 밀리초)
+            setTimeout(displayClock, 1000);
+        }
+        displayClock();
+
+        /**
+         * 특정시각정보를 가진 Date객체
+         * 날짜차이 계싼
+         */
+        function test5() {
+            // const d = new Date(1885, 3-1, 2);
+            // const d = new Date(1885, 3-1, 2, 15, 30, 0);
+            const d = new Date('2022/02/22 15:30');
+            console.log(d);
+
+            // 날짜차이 계산
+            const now = new Date();
+            let diff = now - d; // 밀리초 차이
+            // let diff = now.getTime() - d.getTime(); // unix time(second)
+            console.log(diff);
+
+            diff = Math.floor(diff / 1000 / 60 / 60/ 24); //일단위
+            console.log(diff);
+        }
+
+        
+    </script>
+    <button onclick="test6()";>>@실습문제 - 난수</button>
+    <script>
+    /**
+     * ul#test하위의 li태그 1 ~ 100 사이의 난수를 채움
+     * - 짝수인 경우만 컬러를 부여
+     * - 버튼을 누를 때 마다 새로운 난수를 부여
+     */
+    function test6() {
+        
+    }
+    </script>
+    <ul id="test">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>

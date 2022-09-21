@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>링크관련</title>
+</head>
+<body>
+  <h1>링크관련</h1>  
+  <!--  
+    a태그의 href속성(hyper reference)에 명시된 문서로 이동이 가능하다
+    - 절대주소 : / 또는 protocol
+    - 상대주소 : 현재페이지 기준으로 경로 평가
+
+    target 속성
+     _self : 현재 페이지에서 이동=
+     _blank : 빈 페이지에서 오픈(새 페이지)
+
+  -->
+  <a href="http://naver.com">네이버로~</a><br>
+  <a href="/01_html/index.html"target="_self">인덱스로~(절대주소)</a><br>
+  <a href="./index.html" target="_blank">인덱스로~(상대주소)</a><br>
+  <!-- http://192.168.45.50:5500/01_html/06_link.html -->
+
+  <a href="index.html" title="인덱스 페이지로 이동~">
+      <img src="../sample/image/hyunta.jpg" alt="" style="width: 300px;"></a>
+
+      <h2>한 페이지의 특정부분으로 이동 #bookmark #anchor</h2>
+      <ul>
+          <li><a href="#header1">Hello World1</a></li>
+          <li><a href="#header2">Hello World2</a></li>
+          <li><a href="#header3">Hello World3</a></li>
+          <li><a href="#:~:text=http://192.168.45.50:5500/01_html/06_link.html#:~:text=Hello%20World3-,Lorem%20ipsum%20dolor%20sit%20amet%20consectetur%20adipisicing%20elit.,-Vitae%20maxime%20provident"></a></li>
+      </ul>
+      <!-- (h3#header${Hello World$}+p>lorem*3)*3 -->
+      <h3 id="header1">Hello World1</h3>
+      <p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis ducimus quisquam cumque nam reprehenderit culpa id reiciendis esse? Officiis voluptatum voluptas temporibus consequatur id maxime minima enim commodi perferendis nam.</span><span>Voluptatem placeat consequatur exercitationem impedit necessitatibus vero inventore laboriosam autem velit ipsum? Voluptate excepturi expedita maiores modi suscipit earum, in architecto hic harum accusamus omnis quae accusantium necessitatibus saepe facilis!</span><span>Id, dolorum debitis fugit repellat dolores culpa tempore corporis beatae, necessitatibus quibusdam natus incidunt ipsum? Placeat enim laudantium incidunt vero tenetur quia, dolor amet doloribus velit, nihil aliquid facilis maiores.</span></p>
+      <h3 id="header2">Hello World2</h3>
+      <p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, vel. Excepturi magnam repellat est repudiandae. Dolorum officia minima tenetur sunt repudiandae sequi fugiat veritatis natus eveniet non. Sed, adipisci exercitationem.</span><span>A molestiae iste eius enim? Saepe quis molestiae exercitationem, provident aperiam accusamus tempora dolor quaerat suscipit earum, rerum atque iusto itaque molestias error voluptatem harum iure natus asperiores dignissimos voluptatum?</span><span>Ullam minus velit iure aspernatur excepturi quae tenetur nisi dolorum ducimus. Temporibus ratione magni debitis quibusdam eius velit vitae perspiciatis nihil nesciunt, molestiae tenetur delectus. Accusantium nisi quam vitae nihil.</span></p>
+      <h3 id="header3">Hello World3</h3>
+      <p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae maxime provident ex necessitatibus, corrupti asperiores quis veritatis placeat repellat tenetur repudiandae accusamus, mollitia sequi error. Quod reiciendis praesentium necessitatibus voluptatum.</span><span>Impedit debitis sit alias praesentium deserunt esse nihil nam fuga quidem. Perspiciatis iste reiciendis provident numquam illo minus dignissimos animi nobis? Eligendi dignissimos, earum repellat quia atque voluptatem vel impedit?</span><span>Accusantium nesciunt eligendi dolorem provident? Rem adipisci sed temporibus qui! Consectetur beatae autem pariatur labore earum. Maxime qui dicta eligendi laboriosam numquam, tenetur ab odit id minus perferendis, cum nostrum.</span></p>
+
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <a href="#Top">맨위로~</a>
+
+      
+</body>
+</html>

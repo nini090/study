@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선택자 우선순위</title>
+</head>
+<body>
+    <h1>선택자 우선순위</h1>
+    <!-- p#myp.group[title]='오늘의 한 문장'>lorem -->
+    <p id="myp" class="group" title="오늘의 한 문장" style="color: green;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati doloremque nemo ducimus repellat magni, velit, nihil id quam officiis labore dicta deleniti dolorum nulla fuga animi libero, recusandae qui voluptatibus.</p>
+    <style>
+        /* (우선순위 높음)
+        !important 
+        inline속성 
+        a : #id 
+        b : .class, attribute, pseudo-class
+        c : tag, pseudo-element
+        (우선순위 낮음) */
+
+        p{color: red;}
+        .group {color: orange;}
+        #myp {color: yellow;}
+        p{color: blue !important;}
+    </style>
+
+</body>
+</html>

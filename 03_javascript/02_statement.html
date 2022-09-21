@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제어문</title>
+</head>
+<body>
+    <h1>제어문</h1>
+    <h2>분기문</h2>
+    <button onclick="test1();">if</button>
+    <button onclick="test2();">switch</button>
+    <script>
+        /**
+         * if
+         * if else
+         * if else if
+         */
+        function test1() {
+            const n = Math.floor(Math.random() * 10 + 1); // 1 ~ 10 사이의 임의의 정수
+            console.log(n);
+            if(n % 2 == 0) {
+                console.log("짝수");
+            }
+            else {
+                console.log("홀수");
+            }
+        }
+        /**
+         * switch
+         */
+        function test2() {
+            const n = prompt("1 ~ 3 사이의 정수를 입력하세요"); // string을 반환
+            switch(n) {
+                case "1" : console.log('1을 입력하셨습니다.'); break;
+                case "2" : console.log('2을 입력하셨습니다.'); break;
+                case "3" : console.log('3을 입력하셨습니다.'); break;
+                default : console.log('잘못 입력하셨습니다.'); 
+            }
+        }
+    </script>
+
+    <h2>반복문</h2>
+    <button onclick="test3();">for</button>
+    <button onclick="test4();">while</button>
+    <button onclick="test5();">">@실습문제 - 구구단"</button>
+    <script>
+        /**
+         * for(let i = 0; i < 10;i++ )
+         * 
+         * for
+         * for..in
+         * for..of
+         */
+        function test3() {
+            for(let i = 0;i < 10;i++) {
+                console.log(i);
+            }
+            
+            // js에는 for..each문은 존재하지 않는다.
+            const arr = ['a', 'b', 'c'];
+            // for..in Enumerable속성이 true인 속성을 순회
+            // 배열 사용 시 index를 참조
+            for(let i in arr) {
+                console.log(i, arr[i]); // index, i가 인덱스
+            }
+
+            // for..of - 해당객체가 iterator속성을 가지고 있는 경우 사용가능
+            // 배열 사용 시 요소를 참조
+            for(let ch of arr) {
+                console.log(ch); // 인덱스가 아닌 요소만 뱉음
+            }
+        }
+        /**
+         * while
+         * do..while
+         */
+        function test4() {
+            let i = 1;
+            while(i <= 10){
+                console.log(i++); //후위증감연산 - 인접연산 처리 후 증감
+            }
+
+            let yn;
+            do{
+                yn = prompt("계속 하시겠습니까? (y/n)", 'y');
+            } while(yn == 'y');
+        }
+        /**
+         * @실습문제 - 구구단
+         *  - 사용자가 입력한 단 수(2 ~ 9)의 구구단을 출력 
+         *  - gugudan함수를 호출해서 출력할 것.
+         *  - 2 ~ 9 사이의 숫자가 아닌 경우 출력하지 않는다.
+         */
+        function test5() {
+            // number타입으로 명시적 형변환 "2" -> 2
+            const dan = Number(prompt("구구단 수 (2~9)를 입력하세요", 2));
+            if(dan >= 2 && dan <= 9)
+            gugudan(dan);
+        }
+        /**
+         * 매개변수 dan의 타입은 호출 시 매개인자에 따라 결정된다
+         */
+        function gugudan(dan) {
+            for(let i = 1; i < 10; i++)
+                console.log(dan, "X", i, '=', dan*i);
+        }
+    </script>
+</body>
+</html>
